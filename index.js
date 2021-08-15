@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 require('dotenv').config();
-const { connectMongo, db } = require('./db');
+const { connectMongo } = require('./db');
 const generate = require('./generate');
 const viewSecret = require('./view');
 

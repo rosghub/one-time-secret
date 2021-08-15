@@ -2,7 +2,7 @@ const { db } = require('./db');
 const MAX_LEN = process.env.MAX_LEN || 1024;
 
 // @return errors
-function validateSecret(secret) {
+function getValidationErrors(secret) {
     if (typeof(secret) !== 'string')
         return 'Invalid data type';
     if (secret.length <= 0)
@@ -23,9 +23,9 @@ async function storeSecret(secret) {
     });
 }
 
-function generateValidation(req, res, next) {
-    const secret = req.body.secret;
-    const validationErrors = validateSecret(secret);
+function validateSecret(req, res, next) {
+    const { secret } = req.body;
+    const validationErrors = getValidationErrors(secret);
     if (validationErrors) {
         res.send(validationErrors);
     }
@@ -33,13 +33,14 @@ function generateValidation(req, res, next) {
         next();
 }
 
-async function generate(req, res) {
+async function generateSecret(req, res) {
     const { secret } = req.body;
     const id = await storeSecret(secret);
-    res.send('Here\'s your link: https://secrets.rosghub.xyz/view/' + id);
+    const url = req.protocol + '://' + req.get('host') + '/view/' + id;
+    res.send(`Here's your link: <a href="${url}">${url}</a>`)
 }
 
 module.exports = [
-    generateValidation,
-    generate
+    validateSecret,
+    generateSecret
 ];
