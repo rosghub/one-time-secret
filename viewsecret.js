@@ -4,17 +4,20 @@ const { db } = require('./db');
 
 // @return secret
 async function destroySecret(id) {
-    const collection = db.collection('secrets');
-    const doc = { _id: ObjectId(id) };
+    try {
+        const collection = db.collection('secrets');
+        const doc = { _id: ObjectId(id) };
 
-    const secret = await collection.findOne(doc).then(res => res ? res.secret : null);
+        const secret = await collection.findOne(doc).then(res => res ? res.secret : null);
 
-    if (secret)
-        return collection.deleteOne(doc).then(res => {
-            console.log('Secret deleted');
-            return secret
-        });
-
+        if (secret)
+            return collection.deleteOne(doc).then(res => {
+                console.log('Secret deleted');
+                return secret
+            });
+    }
+    catch (e) {
+    }
     return null;
 }
 
