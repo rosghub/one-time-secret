@@ -3,7 +3,7 @@ const path = require('path');
 require('dotenv').config();
 const { connectMongo } = require('./db');
 const generate = require('./generate');
-const viewSecret = require('./view');
+const viewSecret = require('./viewsecret');
 
 const port = process.env.PORT;
 
