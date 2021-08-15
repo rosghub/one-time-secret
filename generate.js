@@ -37,7 +37,10 @@ async function generateSecret(req, res) {
     const { secret } = req.body;
     const id = await storeSecret(secret);
     const url = req.protocol + '://' + req.get('host') + '/view/' + id;
-    res.send(`Here's your link: <a href="${url}">${url}</a>`)
+    //res.send(`Here's your link: <a href="${url}">${url}</a>`)
+    res.render('generate', {
+        link: url
+    });
 }
 
 module.exports = [
