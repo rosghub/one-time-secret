@@ -27,6 +27,59 @@
         </div>
     </section>
 
+    <section class="section is-medium">
+        <div class="container has-text-centered">
+            <p class="title is-size-4">Here's a link to your secret</p>
+            <p class="subtitle is-size-6-mobile">
+                It can only be viewed once.<br />
+                After that it will be gone forever.
+            </p>
+        </div>
+    </section>
+
+    <div class="columns is-centered">
+        <div class="column is-narrow">
+            <div class="card">
+                <div class="card-footer">
+                    <span class="card-footer-item p-5">
+                        <a href="google.com" id="secret_link">
+                            google.com
+                        </a>
+                    </span>
+                    <button class="card-header-icon" aria-label="more options" onclick="copyLink()">
+                        <span class="icon">
+                            <i class="fas fa-copy"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns is-centered mt-5">
+        <div class="column is-narrow">
+            <a href="/">
+                <button class="button">
+                    <span class="icon is-small">
+                        <i class="fas fa-hand-point-left"></i>
+                    </span>
+                    <span>Generate Another</span>
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function copyLink() {
+            var range = document.createRange();
+            range.selectNode(document.getElementById("secret_link"));
+            window.getSelection().removeAllRanges(); // clear current selection
+            window.getSelection().addRange(range); // to select text
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();// to deselect
+        }
+    </script>
 
 </body>
+
 </html>
