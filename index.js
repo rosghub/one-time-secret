@@ -11,18 +11,14 @@ const port = process.env.PORT;
 
 const app = express();
 
+//app.use(require('./design')());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 app.post('/generate', generate);
 app.get('/view/:id', viewSecret);
-
-/*
-app.get('/test', (req, res) => {
-    res.render('generate', { link: 'link goes here' });
-})
-*/
 
 connectMongo().then(success => {
     if (success) {
