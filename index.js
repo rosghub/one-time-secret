@@ -1,3 +1,4 @@
+const { render } = require('ejs');
 const express = require('express');
 const path = require('path');
 require('dotenv').config();
@@ -16,6 +17,12 @@ app.set('view engine', 'ejs');
 
 app.post('/generate', generate);
 app.get('/view/:id', viewSecret);
+
+/*
+app.get('/test', (req, res) => {
+    res.render('generate', { link: 'link goes here' });
+})
+*/
 
 connectMongo().then(success => {
     if (success) {

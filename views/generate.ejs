@@ -48,7 +48,8 @@
                     </span>
                     <button class="card-header-icon" aria-label="more options" onclick="copyLink()">
                         <span class="icon">
-                            <i class="fas fa-copy"></i>
+                            <i class="fas fa-copy" id="copy_btn"></i>
+                            <i class="fas fa-check" id="success_btn" style="color: green; display: none"></i>
                         </span>
                     </button>
                 </div>
@@ -71,12 +72,24 @@
 
     <script>
         function copyLink() {
+            // copy link
             var range = document.createRange();
             range.selectNode(document.getElementById("secret_link"));
-            window.getSelection().removeAllRanges(); // clear current selection
-            window.getSelection().addRange(range); // to select text
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
             document.execCommand("copy");
-            window.getSelection().removeAllRanges();// to deselect
+            window.getSelection().removeAllRanges();
+
+            // flash success icon
+            var copyBtn = document.getElementById("copy_btn");
+            var successBtn = document.getElementById("success_btn");
+            copyBtn.style.display = 'none';
+            successBtn.style.display = 'block';
+
+            window.setTimeout(() => {
+                copyBtn.style.display = 'block';
+                successBtn.style.display = 'none';
+            }, 1200);
         }
     </script>
 
