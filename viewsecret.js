@@ -16,15 +16,14 @@ async function destroySecret(id) {
                 return secret
             });
     }
-    catch (e) {
-    }
+    catch (e) {}
     return null;
 }
 
 async function viewSecret(req, res) {
     const { id } = req.params;
 
-    const secret = (await destroySecret(id)) || `Secret doesn't exist`;
+    const secret = await destroySecret(id);
 
     res.render('secret', { secret });
 }
