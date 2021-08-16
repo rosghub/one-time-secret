@@ -24,10 +24,9 @@ async function destroySecret(id) {
 async function viewSecret(req, res) {
     const { id } = req.params;
 
-    const secret = await destroySecret(id);
+    const secret = (await destroySecret(id)) || `Secret doesn't exist`;
 
-    const m = secret ? `Here's you're secret: ${secret}` : `Secret doesn't exist.`;
-    res.send(m);
+    res.render('secret', { secret });
 }
 
 module.exports = viewSecret;
