@@ -1,4 +1,4 @@
-const { db } = require('./db');
+const { storeSecret } = require('./db');
 const MAX_LEN = process.env.MAX_LEN || 1024;
 
 // @return errors
@@ -11,16 +11,6 @@ function getValidationErrors(secret) {
         return 'Secret too long';
 
     return null;
-}
-
-async function storeSecret(secret) {
-    return db.collection('secrets').insertOne({ secret }).then(res => {
-        const { insertedId } = res;
-        console.log('inserted document: ' + insertedId);
-        return insertedId;
-    }).catch(err => {
-        console.error(err);
-    });
 }
 
 function validateSecret(req, res, next) {
