@@ -1,5 +1,7 @@
 const crypto = require('crypto');
 
+const defaultPass = '357e231089bef2841bde3a53aa62b11e5d2874a5501a7ce4d46a95e616b5e17a';
+
 /**
  * GCM is an authenticated encryption mode that
  * not only provides confidentiality but also 
@@ -60,14 +62,32 @@ function getKeyFromPassword(password, salt) {
  * the Buffer after the encryption to prevent the message text 
  * and the key from lingering in the memory
  */
-function encrypt(messagetext, key) {
+function encrypt(messagetext, password) {
+    const pass = password || defaultPass;
+    const salt = getSalt();
+    const key = getKeyFromPassword(pass, salt);
+
     const iv = getIV();
     const cipher = crypto.createCipheriv(
         BLOCK_CIPHER, key, iv,
         { 'authTagLength': AUTH_TAG_BYTE_LEN });
     let encryptedMessage = cipher.update(messagetext);
     encryptedMessage = Buffer.concat([encryptedMessage, cipher.final()]);
-    return Buffer.concat([iv, encryptedMessage, cipher.getAuthTag()]);
+    //return Buffer.concat([iv, encryptedMessage, cipher.getAuthTag()]);
+/*
+    return {
+        iv: iv.toString('hex'),
+        message: encryptedMessage.toString('hex'),
+        authTag: cipher.getAuthTag().toString('hex'),
+        salt: salt.toString('hex')
+    };
+    */
+   return {
+       iv,
+       message: encryptedMessage,
+       authTag: cipher.getAuthTag(),
+       salt
+   }
 }
 
 /**
@@ -79,16 +99,22 @@ function encrypt(messagetext, key) {
  * the Buffer after the decryption to prevent the message text 
  * and the key from lingering in the memory
  */
+/*
 function decrypt(ciphertext, key) {
     const authTag = ciphertext.slice(-1 * AUTH_TAG_BYTE_LEN);
     const iv = ciphertext.slice(0, IV_BYTE_LEN);
     const encryptedMessage = ciphertext.slice(IV_BYTE_LEN, -1 * AUTH_TAG_BYTE_LEN);
+    */
+function decrypt(hash, password) {
+    const { iv, message, authTag, salt } = hash;
+    const pass = password || defaultPass;
+    const key = getKeyFromPassword(pass, salt);
 
     const decipher = crypto.createDecipheriv(
         BLOCK_CIPHER, key, iv,
         { 'authTagLength': AUTH_TAG_BYTE_LEN });
     decipher.setAuthTag(authTag);
-    let messagetext = decipher.update(encryptedMessage);
+    let messagetext = decipher.update(message);
     messagetext = Buffer.concat([messagetext, decipher.final()]);
     return messagetext;
 }
