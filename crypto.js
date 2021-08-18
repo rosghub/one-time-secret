@@ -80,9 +80,10 @@ function encrypt(messagetext, key) {
  * and the key from lingering in the memory
  */
 function decrypt(ciphertext, key) {
-    const authTag = ciphertext.slice(-16);
-    const iv = ciphertext.slice(0, 12);
-    const encryptedMessage = ciphertext.slice(12, -16);
+    const authTag = ciphertext.slice(-1 * AUTH_TAG_BYTE_LEN);
+    const iv = ciphertext.slice(0, IV_BYTE_LEN);
+    const encryptedMessage = ciphertext.slice(IV_BYTE_LEN, -1 * AUTH_TAG_BYTE_LEN);
+
     const decipher = crypto.createDecipheriv(
         BLOCK_CIPHER, key, iv,
         { 'authTagLength': AUTH_TAG_BYTE_LEN });
