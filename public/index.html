@@ -31,32 +31,54 @@
     <section class="section is-medium">
         <div class="container has-text-centered">
             <p class="title">One Time Secret</p>
-            <p class="subtitle is-size-6-mobile">This app allows you to share a one time secret.<br />Generate a link to your secret that
+            <p class="subtitle is-size-6-mobile">This app allows you to share a one time secret.<br />Generate a link to
+                your secret that
                 can only be viewed once.</p>
-
         </div>
     </section>
 
 
-    <div class="container">
-        <div class="columns is-centered">
-            <div class="column is-two-thirds has-text-centered">
-                <form action="/generate" method="post">
-                    <div class="field mx-5">
-                        <div class="control">
-                            <textarea class="textarea" placeholder="Secrets" name="secret" maxlength="1024"
-                                required></textarea>
-                        </div>
+    <div class="columns is-centered">
+        <div class="column is-6-widescreen is-two-thirds mx-5">
+            <form action="/generate" method="post">
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea" placeholder="Secrets" name="secret" maxlength="1024"
+                            required></textarea>
                     </div>
+                </div>
 
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Passphrase</label>
+                    </div>
                     <div class="field">
-                        <div class="control">
-                            <button class="button is-link">Generate Link</button>
-                        </div>
+                        <p class="control has-icons-left">
+                            <input class="input" type="password">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
                     </div>
+                </div>
 
-                </form>
-            </div>
+
+                <div class="field" style="float: right">
+                    <div class="control">
+                        <button class="button is-link">Generate Link</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+    <div class="columns is-centered">
+        <div class="column is-narrow">
+            <li>Links generated with this app can only be used once.</li>
+            <li>Secrets are encrypted at rest by a default password.</li>
+            <li>Optionally provide your own passphrase for <strong>client side encryption</strong></li>
         </div>
     </div>
 </body>
