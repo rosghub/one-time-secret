@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/71d07ad384.js" crossorigin="anonymous"></script>
+    <title>One Time Secret</title>
+</head>
+<style>
+    #copy_icon {
+        position: absolute;
+        right: .5rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+</style>
+
+<body>
+    <section class="hero has-background-light">
+        <div class="hero-head">
+            <div class="container is-mobile px-5">
+                <nav class="level is-mobile py-3">
+                    <a href="https://rosghub.xyz">
+                        <span class="title is-5">rosghub.xyz</span>
+                    </a>
+
+                    <a href="https://github.com" target="_blank">
+                        <span class="icon has-text-info-dark">
+                            <i class="fab fa-github fa-lg"></i>
+                        </span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <section class="section is-medium">
+        <div class="container has-text-centered">
+            <p class="title is-size-4">
+                Here's your secret
+            </p>
+            <p class="subtitle is-size-6-mobile">
+                This secret is encrypted with a user passphrase.
+            </p>
+        </div>
+    </section>
+
+    <div class="columns is-centered">
+        <div class="column is-narrow">
+            <form action="<%= link %>" method="POST">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Passphrase</label>
+                    </div>
+                    <div class="field-body">
+                        <p class="control has-icons-left">
+                            <input class="input" type="password" name="passphrase" required>
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="field" style="float: right">
+                    <div class="control">
+                        <button class="button is-link">Decrypt</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="columns is-centered mt-5 is-mobile">
+        <div class="column is-narrow">
+            <a href="/">
+                <button class="button">
+                    <span class="icon is-small">
+                        <i class="fas fa-hand-point-left"></i>
+                    </span>
+                    <span>Generate Another</span>
+                </button>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

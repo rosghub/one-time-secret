@@ -14,12 +14,8 @@ async function handleUserPass(req, res, next) {
                 authTag: secret.authTag.buffer,
                 salt: secret.salt.buffer
             }, passphrase);
-            res.render('secret', {
-                secret: message,
-                userPass: false,
-                link: null
-            });
             await deleteSecret(id);
+            res.render('secret', { secret: message });
         }
         catch (e) {
             // TODO render wrong pass
@@ -39,35 +35,24 @@ async function viewSecret(req, res, next) {
         next();
     }
     else
-        res.render('secret', {
-            secret: null,
-            userPass: false,
-            link: null
-        });
+        res.render('secret');
 }
 
 async function viewDecryptedSecret(req, res) {
     const { userPass, secret } = req;
     if (userPass) {
-        res.render('secret', {
-            secret: null,
-            userPass: true,
-            link: req.originalUrl
-        });
+        res.render('decrypt', { link: req.originalUrl });
     }
     else {
+        // Decrypt with default pass
         const message = decrypt({
             iv: secret.iv.buffer,
             message: secret.message.buffer,
             authTag: secret.authTag.buffer,
             salt: secret.salt.buffer
         });
-        res.render('secret', {
-            secret: message,
-            userPass: false,
-            link: null
-        });
         await deleteSecret(req.params.id);
+        res.render('secret', { secret: message });
     }
 }
 
