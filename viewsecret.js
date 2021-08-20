@@ -18,7 +18,10 @@ async function handleUserPass(req, res, next) {
             res.render('secret', { secret: message });
         }
         catch (e) {
-            // TODO render wrong pass
+            res.render('decrypt', {
+                link: req.originalUrl,
+                wrongPass: true
+            });
         }
     }
     else
@@ -35,13 +38,16 @@ async function viewSecret(req, res, next) {
         next();
     }
     else
-        res.render('secret');
+        res.render('secret', { secret: null });
 }
 
 async function viewDecryptedSecret(req, res) {
     const { userPass, secret } = req;
     if (userPass) {
-        res.render('decrypt', { link: req.originalUrl });
+        res.render('decrypt', { 
+            link: req.originalUrl,
+            wrongPass: false
+        });
     }
     else {
         // Decrypt with default pass

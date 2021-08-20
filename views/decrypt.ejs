@@ -46,45 +46,55 @@
         </div>
     </section>
 
-    <div class="columns is-centered">
-        <div class="column is-narrow">
-            <form action="<%= link %>" method="POST">
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Passphrase</label>
-                    </div>
-                    <div class="field-body">
-                        <p class="control has-icons-left">
-                            <input class="input" type="password" name="passphrase" required>
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-lock"></i>
+    <% if (wrongPass) {%>
+        <div class="block">
+            <p class="has-text-centered has-text-danger">
+                Cannot decrypt this secret with the provided passphrase.
+            </p>
+        </div>
+        <% } %>
+
+
+            <div class="columns is-centered">
+                <div class="column is-narrow">
+                    <form action="<%= link %>" method="POST">
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Passphrase</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="control has-icons-left">
+                                    <input class="input <%= (wrongPass) ? 'is-danger' : '' %>" type="password"
+                                        name="passphrase" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field" style="float: right">
+                            <div class="control">
+                                <button class="button is-link">Decrypt</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="columns is-centered mt-5 is-mobile">
+                <div class="column is-narrow">
+                    <a href="/">
+                        <button class="button">
+                            <span class="icon is-small">
+                                <i class="fas fa-hand-point-left"></i>
                             </span>
-                        </p>
-                    </div>
+                            <span>Generate Another</span>
+                        </button>
+                    </a>
                 </div>
-
-                <div class="field" style="float: right">
-                    <div class="control">
-                        <button class="button is-link">Decrypt</button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
-
-    <div class="columns is-centered mt-5 is-mobile">
-        <div class="column is-narrow">
-            <a href="/">
-                <button class="button">
-                    <span class="icon is-small">
-                        <i class="fas fa-hand-point-left"></i>
-                    </span>
-                    <span>Generate Another</span>
-                </button>
-            </a>
-        </div>
-    </div>
+            </div>
 
 </body>
 
