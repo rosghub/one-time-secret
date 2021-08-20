@@ -6,7 +6,7 @@ module.exports = () => {
             if (req.originalUrl == '/generate')
                 return res.render('generate', { link: 'link' });
             else if (req.originalUrl.startsWith('/view'))
-                return res.render('secret', { secret: 'secret' });
+                return res.render('secret', { secret: 'secret', userPass: true, link: '/view/1234' });
         }
 
         next();

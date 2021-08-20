@@ -21,33 +21,38 @@ async function connectMongo() {
 
 function storeSecret(secret, password) {
     const doc = {
-        secret: encrypt(secret)
+        secret: encrypt(secret, password),
+        userPass: password != null && password.length > 0
     };
 
     return db.collection('secrets').insertOne(doc).then(res => {
         const { insertedId } = res;
-        console.log('inserted document: ' + insertedId);
+        console.log(`Inserted secret ${insertedId} with ${password ? 'user' : 'default'} pass.`);
         return insertedId;
     }).catch(err => {
         console.error(err);
     });
 }
 
-function getSecret(id, password) {
+function getSecret(id) {
     try {
         const collection = db.collection('secrets');
         const doc = { _id: new ObjectId(id) };
 
         return collection.findOne(doc).then(res => {
             if (res) {
-                const { secret } = res;
+                /*
+                const { secret, userPass } = res;
                 return decrypt({
                     iv: secret.iv.buffer,
                     message: secret.message.buffer,
                     authTag: secret.authTag.buffer,
                     salt: secret.salt.buffer
                 });
+                */
+               return res;
             }
+            return null;
         });
     }
     catch (e) { }

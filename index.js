@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 app.post('/generate', generate);
-app.get('/view/:id', viewSecret);
+app.all('/view/:id', viewSecret);
 
 connectMongo().then(success => {
     if (success) {
