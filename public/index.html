@@ -50,11 +50,11 @@
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label">Passphrase</label>
+                        <strong>Passphrase</strong> <small>(Optional)</small>
                     </div>
                     <div class="field">
                         <p class="control has-icons-left">
-                            <input class="input" type="password">
+                            <input class="input" type="password" name="passphrase">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -72,13 +72,12 @@
             </form>
         </div>
     </div>
-
-
+<br/>
     <div class="columns is-centered">
-        <div class="column is-narrow">
+        <div class="column is-narrow px-5">
             <li>Links generated with this app can only be used once.</li>
             <li>Secrets are encrypted at rest by a default password.</li>
-            <li>Optionally provide your own passphrase for <strong>client side encryption</strong></li>
+            <li>Optionally encrypt with your own passphrase by providing a passphrase.</li>
         </div>
     </div>
 </body>
