@@ -47,7 +47,7 @@
     </section>
 
     <% if (wrongPass) {%>
-        <div class="block">
+        <div class="block mx-5">
             <p class="has-text-centered has-text-danger">
                 Cannot decrypt this secret with the provided passphrase.
             </p>
@@ -55,7 +55,7 @@
         <% } %>
 
 
-            <div class="columns is-centered">
+            <div class="columns is-centered mx-4">
                 <div class="column is-narrow">
                     <form action="<%= link %>" method="POST">
                         <div class="field is-horizontal">
