@@ -6,23 +6,27 @@ async function handleUserPass(req, res, next) {
         const { passphrase } = req.body;
         const { id } = req.params;
         const doc = await getSecret(id);
-        const { secret } = doc;
-        try {
-            const message = decrypt({
-                iv: secret.iv.buffer,
-                message: secret.message.buffer,
-                authTag: secret.authTag.buffer,
-                salt: secret.salt.buffer
-            }, passphrase);
-            await deleteSecret(id);
-            res.render('secret', { secret: message });
+        if (doc) {
+            const { secret } = doc;
+            try {
+                const message = decrypt({
+                    iv: secret.iv.buffer,
+                    message: secret.message.buffer,
+                    authTag: secret.authTag.buffer,
+                    salt: secret.salt.buffer
+                }, passphrase);
+                await deleteSecret(id);
+                res.render('secret', { secret: message });
+            }
+            catch (e) {
+                res.render('decrypt', {
+                    link: req.originalUrl,
+                    wrongPass: true
+                });
+            }
         }
-        catch (e) {
-            res.render('decrypt', {
-                link: req.originalUrl,
-                wrongPass: true
-            });
-        }
+        else
+            next();
     }
     else
         next();
@@ -44,7 +48,7 @@ async function viewSecret(req, res, next) {
 async function viewDecryptedSecret(req, res) {
     const { userPass, secret } = req;
     if (userPass) {
-        res.render('decrypt', { 
+        res.render('decrypt', {
             link: req.originalUrl,
             wrongPass: false
         });

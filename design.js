@@ -4,10 +4,10 @@ module.exports = () => {
     return (req, res, next) => {
         if (req.method == 'GET') {
             if (req.originalUrl == '/generate')
-                return res.render('generate', { link: 'link' });
+                return res.render('generate', { link: 'thisisalonglinkthisisalonglinkthisisalonglinkthisisalonglinkthisisalonglinkthisisalonglink' });
             else if (req.originalUrl.startsWith('/view'))
-                //return res.render('secret', { secret: null });
-                return res.render('decrypt', { link: '/view/1234', wrongPass: false });
+                return res.render('secret', { secret: 'this is a long secretthis is a long secretthis is a long secretthis is a long secretthis is a long secretthis is a long secretthis is a long secret' });
+                //return res.render('decrypt', { link: '/view/1234', wrongPass: false });
         }
 
         next();
