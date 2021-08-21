@@ -1,41 +1,45 @@
 <div class="columns is-centered">
-    <div class="column is-5-widescreen is-6-desktop is-8-tablet mx-4">
-        <div class="notification" onclick="copyLink()">
-            <span class="icon" id="copy_icon">
-                <i class="fas fa-copy" id="copy_btn"></i>
-                <i class="fas fa-check" id="success_btn" style="display: none"></i>
-            </span>
-            <% if (isLink) { %>
-                <a href="<%= content %>">
+    <% if (isLink) { %>
+        <div class="column is-narrow mx-4">
+            <% } else { %>
+                <div class="column is-5-widescreen is-6-desktop is-8-tablet mx-4">
                     <% } %>
-                        <p id="secret">
-                            <%= content %>
-                        </p>
-                        <% if (isLink) { %>
-                </a>
-                <% } %>
+                        <div class="notification" onclick="copyLink()">
+                            <span class="icon" id="copy_icon">
+                                <i class="fas fa-copy" id="copy_btn"></i>
+                                <i class="fas fa-check" id="success_btn" style="display: none"></i>
+                            </span>
+                            <% if (isLink) { %>
+                                <a href="<%= content %>">
+                                    <% } %>
+                                        <p id="secret">
+                                            <%= content %>
+                                        </p>
+                                        <% if (isLink) { %>
+                                </a>
+                                <% } %>
+                        </div>
+                </div>
         </div>
-    </div>
-</div>
-<script>
-    function copyLink() {
-        // copy link
-        var range = document.createRange();
-        range.selectNode(document.getElementById("secret"));
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        document.execCommand("copy");
-        window.getSelection().removeAllRanges();
+        <script>
+            function copyLink() {
+                // copy link
+                var range = document.createRange();
+                range.selectNode(document.getElementById("secret"));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand("copy");
+                window.getSelection().removeAllRanges();
 
-        // flash success icon
-        var copyBtn = document.getElementById("copy_btn");
-        var successBtn = document.getElementById("success_btn");
-        copyBtn.style.display = 'none';
-        successBtn.style.display = 'block';
+                // flash success icon
+                var copyBtn = document.getElementById("copy_btn");
+                var successBtn = document.getElementById("success_btn");
+                copyBtn.style.display = 'none';
+                successBtn.style.display = 'block';
 
-        window.setTimeout(() => {
-            copyBtn.style.display = 'block';
-            successBtn.style.display = 'none';
-        }, 1200);
-    }
-</script>
+                window.setTimeout(() => {
+                    copyBtn.style.display = 'block';
+                    successBtn.style.display = 'none';
+                }, 1200);
+            }
+        </script>
