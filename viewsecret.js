@@ -66,40 +66,6 @@ async function viewDecryptedSecret(req, res) {
     }
 }
 
-/*
-async function viewSecret(req, res) {
-    const { id } = req.params;
-
-    const doc = await getSecret(id);
-    const data = {
-        secret: null,
-        userPass: false,
-        link: null
-    };
-
-    if (doc != null) {
-        if (doc.userPass) {
-            data.userPass = true;
-            data.link = req.originalUrl;
-        }
-        else {
-            const hash = doc.secret;
-            data.secret = decrypt({
-                iv: hash.iv.buffer,
-                message: hash.message.buffer,
-                authTag: hash.authTag.buffer,
-                salt: hash.salt.buffer
-            });
-        }
-
-        await deleteSecret(id);
-    }
-    res.render('secret', data);
-}
-
-module.exports = viewSecret;
-*/
-
 module.exports = [
     handleUserPass,
     viewSecret,
