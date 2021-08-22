@@ -1,5 +1,5 @@
 <div class="columns is-centered">
-    <% if (isLink || spoiler) { %>
+    <% if (isLink) { %>
         <div class="column is-narrow mx-4">
             <% } else { %>
                 <div class="column is-5-widescreen is-6-desktop is-8-tablet mx-4">
@@ -10,11 +10,7 @@
                                 <i class="fas fa-check" id="success_btn" style="display: none"></i>
                             </span>
                             <p id="secret">
-                                <% if (spoiler) { %>
-                                    <a href="?reveal=true">Click to Reveal</a>
-                                    <% } else { %>
-                                        <%= content %>
-                                            <% } %>
+                                <%= content %>
                             </p>
                         </div>
                 </div>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/71d07ad384.js" crossorigin="anonymous"></script>
+    <title>One Time Secret</title>
+</head>
+<style>
+    <%- include('css/notification.css');
+    %>
+</style>
+
+<body>
+    <%- include('partials/topbar'); %>
+
+        <section class="section is-medium">
+            <div class="container has-text-centered">
+                <p class="title is-size-4">
+                    Here's your secret
+                </p>
+                <p class="subtitle is-size-6-mobile">
+                    It can only be revealed once. After that the link will be invalid.
+                </p>
+
+            </div>
+        </section>
+
+        <div class="columns is-centered">
+            <div class="column is-narrow mx-4">
+                <div class="notification">
+                    <a href="?reveal=true">
+                        <span class="icon" id="copy_icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                        <p id="secret">
+                            Click to Reveal
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <%- include('partials/homebutton') %>
+</body>
+
+</html>
