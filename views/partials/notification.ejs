@@ -10,7 +10,7 @@
                                 <i class="fas fa-check" id="success_btn" style="display: none"></i>
                             </span>
                             <% if (isLink) { %>
-                                <a href="<%= content %>">
+                                <a href="<%= content %>" onclick="event.stopPropagation()">
                                     <% } %>
                                         <p id="secret">
                                             <%= content %>
@@ -22,7 +22,7 @@
                 </div>
         </div>
         <script>
-            function copyLink() {
+            function copyLink(e) {
                 // copy link
                 var range = document.createRange();
                 range.selectNode(document.getElementById("secret"));

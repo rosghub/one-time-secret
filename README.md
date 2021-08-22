@@ -4,4 +4,3 @@ Secrets are encrypted at rest with a default password.
 
 # TODO
 - Add reveal button to /view/:id since secret will be consumed by slack's unfurl
-- Consume link click in /generate so clipboard not overwritten
