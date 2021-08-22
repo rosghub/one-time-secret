@@ -1,0 +1,4 @@
+/*
+    Script for configuring mongoDB
+    To be run once when installing
+*/

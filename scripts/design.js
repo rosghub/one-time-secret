@@ -1,4 +1,7 @@
-// render EJS templates with mock data for page design
+/*
+    Render EJS templates with mock data for page design
+    Used as express middleware
+ */
 
 module.exports = () => {
     return (req, res, next) => {
