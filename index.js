@@ -9,6 +9,7 @@ const port = process.env.PORT;
 
 
 const app = express();
+app.enable('trust proxy');
 //app.use(require('./design')());
 
 app.use(express.static(path.join(__dirname, 'public')));
