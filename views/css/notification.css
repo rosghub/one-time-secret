@@ -1,0 +1,16 @@
+#copy_icon {
+    position: absolute;
+    right: .5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#secret {
+    overflow-x: auto;
+    padding: 20px;
+    margin-right: 20px;
+}
+
+.notification {
+    padding: 0 24px 0 0;
+}
