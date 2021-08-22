@@ -9,15 +9,9 @@
                                 <i class="fas fa-copy" id="copy_btn"></i>
                                 <i class="fas fa-check" id="success_btn" style="display: none"></i>
                             </span>
-                            <% if (isLink) { %>
-                                <a href="<%= content %>" onclick="event.stopPropagation()">
-                                    <% } %>
-                                        <p id="secret">
-                                            <%= content %>
-                                        </p>
-                                        <% if (isLink) { %>
-                                </a>
-                                <% } %>
+                            <p id="secret">
+                                <%= content %>
+                            </p>
                         </div>
                 </div>
         </div>
