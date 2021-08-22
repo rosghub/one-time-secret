@@ -1,5 +1,5 @@
 const { MongoClient, ObjectId } = require('mongodb');
-const { encrypt, decrypt } = require('./crypto');
+const { encrypt } = require('./crypto');
 const client = new MongoClient('mongodb://localhost:27017', {
     serverSelectionTimeoutMS: parseInt(process.env.DB_SERVER_TIMEOUT_MS)
 });

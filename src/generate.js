@@ -1,4 +1,4 @@
-const { storeSecret } = require('./db');
+const { storeSecret } = require('./utils/db');
 const MAX_LEN = process.env.MAX_LEN || 1024;
 
 // @return errors

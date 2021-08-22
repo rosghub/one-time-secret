@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
 require('dotenv').config();
-const { connectMongo } = require('./db');
-const generate = require('./generate');
-const viewSecret = require('./viewsecret');
+const { connectMongo } = require('./src/utils/db');
+const generate = require('./src/generate');
+const viewSecret = require('./src/viewsecret');
 
 const port = process.env.PORT;
 

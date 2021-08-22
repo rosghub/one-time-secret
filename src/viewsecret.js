@@ -1,5 +1,5 @@
-const { getSecret, deleteSecret } = require('./db');
-const { decrypt } = require('./crypto');
+const { getSecret, deleteSecret } = require('./utils/db');
+const { decrypt } = require('./utils/crypto');
 
 async function findSecret(req, res, next) {
     const { id } = req.params;
