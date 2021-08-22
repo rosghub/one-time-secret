@@ -26,7 +26,8 @@ function validateSecret(req, res, next) {
 async function generateSecret(req, res) {
     const { secret, passphrase } = req.body;
     const id = await storeSecret(secret, passphrase);
-    const url = req.protocol + '://' + req.get('host') + '/view/' + id;
+    const protocol = req.secure ? 'https' : 'http';
+    const url = protocol + '://' + req.get('host') + '/view/' + id;
     res.render('generate', {
         link: url
     });
