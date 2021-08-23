@@ -14,22 +14,33 @@ function getValidationErrors(secret) {
 }
 
 function validateSecret(req, res, next) {
-    const { secret } = req.body;
+    var { secret, ttl } = req.body;
     const validationErrors = getValidationErrors(secret);
     if (validationErrors) {
         res.send(validationErrors);
     }
-    else
+    else {
+        if (ttl) {
+            if (ttl < 0)
+                ttl = null;
+            else if (ttl > 30)
+                ttl = 30;
+
+            req.body.ttl = ttl;
+        }
         next();
+    }
 }
 
 async function generateSecret(req, res) {
-    const { secret, passphrase } = req.body;
-    const id = await storeSecret(secret, passphrase);
+    const { secret, passphrase, ttl } = req.body;
+    const { insertedId, ttl: actualTTL } = await storeSecret(secret, passphrase, ttl);
+
     const protocol = req.secure ? 'https' : 'http';
-    const url = protocol + '://' + req.get('host') + '/view/' + id;
+    const url = protocol + '://' + req.get('host') + '/view/' + insertedId;
     res.render('generate', {
-        link: url
+        link: url,
+        ttl: actualTTL
     });
 }
 

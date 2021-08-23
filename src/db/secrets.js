@@ -5,8 +5,9 @@ const { db } = require('./db');
 const defaultTTL = parseInt(process.env.DEFAULT_SECRET_TTL) || 7;
 
 // ttl in days (86400000)
-function storeSecret(secret, password) {
-    const expiresAt = new Date(new Date().getTime() + 86400000 * defaultTTL);
+function storeSecret(secret, password, ttl) {
+    const _ttl = ttl || defaultTTL;
+    const expiresAt = new Date(new Date().getTime() + 86400000 * _ttl);
     const doc = {
         secret: encrypt(secret, password),
         userPass: password != null && password.length > 0,
@@ -16,9 +17,13 @@ function storeSecret(secret, password) {
     return db.collection('secrets').insertOne(doc).then(res => {
         const { insertedId } = res;
         console.log(`Inserted secret ${insertedId} with ${password ? 'user' : 'default'} pass.`);
-        return insertedId;
+        return {
+            insertedId,
+            ttl: _ttl
+        };
     }).catch(err => {
         console.error(err);
+        return null;
     });
 }
 

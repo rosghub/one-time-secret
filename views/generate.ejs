@@ -21,7 +21,8 @@
                 <p class="title is-size-4">Here's a link to your secret</p>
                 <p class="subtitle is-size-6-mobile">
                     It can only be viewed once.<br />
-                    After that it will be gone forever.
+                    After that it will be gone forever.<br />
+                    It expires in <strong><%= `${ttl} ${ttl > 1 ? 'days.' : 'day.'}` %></strong>
                 </p>
             </div>
         </section>
