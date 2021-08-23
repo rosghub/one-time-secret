@@ -11,58 +11,75 @@
 <body>
     <%- include('partials/topbar'); %>
 
-    <section class="section is-medium">
-        <div class="container has-text-centered">
-            <p class="title">One Time Secret</p>
-            <p class="subtitle is-size-6-mobile">This app allows you to share a one time secret.<br />Generate a link to
-                your secret that
-                can only be viewed once.</p>
-        </div>
-    </section>
+        <section class="section is-medium">
+            <div class="container has-text-centered">
+                <p class="title">One Time Secret</p>
+                <p class="subtitle is-size-6-mobile">This app allows you to share a one time secret.<br />Generate a
+                    link to
+                    your secret that
+                    can only be viewed once.</p>
+            </div>
+        </section>
 
-    <div class="columns is-centered">
-        <div class="column is-5-fullhd is-6-widescreen is-two-thirds mx-5">
-            <form action="/generate" method="post">
-                <div class="field">
-                    <div class="control">
-                        <textarea class="textarea" placeholder="Secrets" name="secret" maxlength="1024"
-                            required></textarea>
-                    </div>
-                </div>
-
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <strong>Passphrase</strong> <small>(Optional)</small>
-                    </div>
+        <div class="columns is-centered">
+            <div class="column is-5-fullhd is-6-widescreen is-two-thirds mx-5">
+                <form action="/generate" method="post">
                     <div class="field">
-                        <p class="control has-icons-left">
-                            <input class="input" type="password" name="passphrase" autocomplete="off">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                        </p>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="Secrets" name="secret" maxlength="1024"
+                                required></textarea>
+                        </div>
                     </div>
-                </div>
 
-
-                <div class="field" style="float: right">
-                    <div class="control">
-                        <button class="button is-link">Generate Link</button>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <strong>Passphrase</strong> <small>(Optional)</small>
+                            <p class="help">Encypt with your own passphrase for additional security.</p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" name="passphrase" autocomplete="off">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </p>
+                        </div>
                     </div>
-                </div>
 
-            </form>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <strong>TTL</strong> <small>(Optional)</small>
+                            <p class="help">Lifespan in days, default is 7. Max is 30.</p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="number" name="ttl">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-archive"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="field" style="float: right">
+                        <div class="control">
+                            <button class="button is-link">Generate Link</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
         </div>
-    </div>
-<br/>
-    <div class="columns is-centered">
-        <div class="column is-narrow px-5">
-            <li>Links generated with this app can only be used once.</li>
-            <li>Secrets are encrypted at rest by a default password.</li>
-            <li>Providing your own passphrase will use encrypt it with your own passphrase.</li>
-            <li>Secrets have a default TTL of 7 days.</li>
+        <br />
+        <div class="columns is-centered">
+            <div class="column is-narrow px-5">
+                <li>Links generated with this app can only be used once.</li>
+                <li>Secrets are encrypted at rest by a default password.</li>
+                <li>Providing your own passphrase will use encrypt it with your own passphrase.</li>
+                <li>Secrets have a default TTL of 7 days.</li>
+            </div>
         </div>
-    </div>
 </body>
 
 </html>
