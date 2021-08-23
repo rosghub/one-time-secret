@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 require('dotenv').config();
 const { connectMongo } = require('./src/utils/db');
 const generate = require('./src/generate');
@@ -20,7 +19,7 @@ app.get('/', (req, res) => res.render('index'));
 app.post('/generate', generate);
 app.all('/view/:id', viewSecret);
 
-connectMongo().then(success => {
+connectMongo().then(({ success }) => {
     if (success) {
         app.listen(port, '127.0.0.1');
         console.log('listening at port: ' + port);

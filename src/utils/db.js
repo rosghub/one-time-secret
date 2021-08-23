@@ -1,24 +1,25 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const { encrypt } = require('./crypto');
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
+const tableName = 'secrets';
 
 const client = new MongoClient(mongoUrl, {
     serverSelectionTimeoutMS: parseInt(process.env.DB_SERVER_TIMEOUT_MS)
 });
 
-const db = client.db('secrets');
+const db = client.db(tableName);
 
 // return success
 async function connectMongo() {
     console.log('Establing DB connection...');
     return client.connect().then(client => {
-        console.log('Mongo connection successful')
-        return true;
+        console.log('Mongo connection successful');
+        return { success: true, client };
     }).catch(err => {
         console.error(err);
         console.log('Mongo connection failed');
-        return false;
-    })
+        return { success: false };
+    });
 }
 
 function storeSecret(secret, password) {
@@ -52,7 +53,7 @@ function getSecret(id) {
                     salt: secret.salt.buffer
                 });
                 */
-               return res;
+                return res;
             }
             return null;
         });
@@ -72,5 +73,6 @@ module.exports = {
     connectMongo,
     storeSecret,
     getSecret,
-    deleteSecret
+    deleteSecret,
+    tableName
 };
