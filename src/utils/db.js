@@ -1,7 +1,9 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const { encrypt } = require('./crypto');
+
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const tableName = 'secrets';
+const defaultTTL = parseInt(process.env.DEFAULT_SECRET_TTL) || 7;
 
 const client = new MongoClient(mongoUrl, {
     serverSelectionTimeoutMS: parseInt(process.env.DB_SERVER_TIMEOUT_MS)
@@ -22,10 +24,13 @@ async function connectMongo() {
     });
 }
 
+// ttl in days (86400000)
 function storeSecret(secret, password) {
+    const expiresAt = new Date(new Date().getTime() + 86400000 * defaultTTL);
     const doc = {
         secret: encrypt(secret, password),
-        userPass: password != null && password.length > 0
+        userPass: password != null && password.length > 0,
+        expiresAt
     };
 
     return db.collection('secrets').insertOne(doc).then(res => {
