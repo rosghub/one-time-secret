@@ -3,6 +3,7 @@ const { encrypt } = require('./crypto');
 
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
 const tableName = 'secrets';
+const indexTTLName = 'expiresAtTTL';
 const defaultTTL = parseInt(process.env.DEFAULT_SECRET_TTL) || 7;
 
 const client = new MongoClient(mongoUrl, {
@@ -11,17 +12,43 @@ const client = new MongoClient(mongoUrl, {
 
 const db = client.db(tableName);
 
-// return success
 async function connectMongo() {
     console.log('Establing DB connection...');
-    return client.connect().then(client => {
+    return client.connect().then(async client => {
         console.log('Mongo connection successful');
-        return { success: true, client };
+
+        await checkIndexes();
+        return {
+            success: true,
+            client
+        };
     }).catch(err => {
         console.error(err);
         console.log('Mongo connection failed');
-        return { success: false };
+        return {
+            success: false,
+            client: null
+        };
     });
+}
+
+async function checkIndexes() {
+    const indexes = await client.db(tableName).collection('secrets').indexes();
+    const exists = indexes.find(e => e.name == indexTTLName)
+    if (!exists) {
+        console.log('Index TTL missing, creating now');
+        const name = await db.collection('secrets').createIndex(
+            { expiresAt: 1 },
+            {
+                expireAfterSeconds: 0,
+                name: indexTTLName
+            }
+        );
+        if (name == indexTTLName)
+            console.log('Index TTL created');
+    }
+    else
+        console.log('Index TTL already exists');
 }
 
 // ttl in days (86400000)
@@ -79,5 +106,6 @@ module.exports = {
     storeSecret,
     getSecret,
     deleteSecret,
-    tableName
+    tableName,
+    indexTTLName
 };
