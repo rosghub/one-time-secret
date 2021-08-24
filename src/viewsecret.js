@@ -1,5 +1,5 @@
 const { getSecret, deleteSecret } = require('./db/secrets');
-const { decrypt } = require('./utils/crypto');
+const { decrypt } = require('./crypto');
 
 async function findSecret(req, res, next) {
     const { id } = req.params;
@@ -67,6 +67,7 @@ async function handleDefaultDecrypt(req, res) {
             res.render('secret', { secret: message });
         }
         catch (e) {
+            console.error(e);
             res.status(500);
         }
     }

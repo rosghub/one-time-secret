@@ -3,26 +3,25 @@ require('dotenv').config();
 const { connectMongo } = require('./src/db/db');
 const generate = require('./src/generate');
 const viewSecret = require('./src/viewsecret');
-
-const port = process.env.PORT;
-
+const constants = require('./src/constants');
 
 const app = express();
 app.set('trust proxy', '127.0.0.1');
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
 //app.use(require('./dev/design')());
 
-//app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (_req, res) => {
+    res.render('index', { maxLen: constants.MAX_LEN })
+});
 app.post('/generate', generate);
-app.all('/view/:id', viewSecret);
+app.get('/view/:id', viewSecret);
+app.post('/view/:id', viewSecret);
 
 connectMongo().then(({ success }) => {
     if (success) {
-        app.listen(port, '127.0.0.1');
-        console.log('listening at port: ' + port);
+        app.listen(constants.PORT, '127.0.0.1');
+        console.log('listening at port: ' + constants.PORT);
     }
     else
         console.log('DB connection failed, aborted.');

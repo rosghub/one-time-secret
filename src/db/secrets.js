@@ -1,12 +1,11 @@
 const { ObjectId } = require('mongodb');
-const { encrypt } = require('./../utils/crypto');
+const { encrypt } = require('../crypto');
 const { db } = require('./db');
-
-const defaultTTL = parseInt(process.env.DEFAULT_SECRET_TTL) || 7;
+const { DEFAULT_SECRET_TTL } = require('./../constants');
 
 // ttl in days (86400000)
 function storeSecret(secret, password, ttl) {
-    const _ttl = ttl || defaultTTL;
+    const _ttl = ttl || DEFAULT_SECRET_TTL;
     const expiresAt = new Date(new Date().getTime() + 86400000 * _ttl);
     const doc = {
         secret: encrypt(secret, password),

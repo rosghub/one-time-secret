@@ -1,14 +1,11 @@
 const { MongoClient } = require('mongodb');
+const { MONGO_URL, MONGO_TABLE, MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS } = require('./../constants');
 
-const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
-const tableName = 'secrets';
-const indexTTLName = 'expiresAtTTL';
-
-const client = new MongoClient(mongoUrl, {
-    serverSelectionTimeoutMS: parseInt(process.env.DB_SERVER_TIMEOUT_MS)
+const client = new MongoClient(MONGO_URL, {
+    serverSelectionTimeoutMS: DB_SERVER_TIMEOUT_MS
 });
 
-const db = client.db(tableName);
+const db = client.db(MONGO_TABLE);
 
 async function connectMongo() {
     console.log('Establing DB connection...');
@@ -32,18 +29,18 @@ async function connectMongo() {
 }
 
 async function checkIndexes() {
-    const indexes = await client.db(tableName).collection('secrets').indexes();
-    const exists = indexes.find(e => e.name == indexTTLName)
+    const indexes = await client.db(MONGO_TABLE).collection('secrets').indexes();
+    const exists = indexes.find(e => e.name == MONGO_INDEX_TTL)
     if (!exists) {
         console.log('Index TTL missing, creating it now');
         const name = await db.collection('secrets').createIndex(
             { expiresAt: 1 },
             {
                 expireAfterSeconds: 0,
-                name: indexTTLName
+                name: MONGO_INDEX_TTL
             }
         );
-        if (name == indexTTLName)
+        if (name == MONGO_INDEX_TTL)
             console.log('Index TTL created');
     }
     else

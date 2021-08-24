@@ -1,5 +1,5 @@
 const { storeSecret } = require('./db/secrets');
-const MAX_LEN = process.env.MAX_LEN || 1024;
+const { MAX_LEN } = require('./constants');
 
 // @return errors
 function getValidationErrors(secret) {
