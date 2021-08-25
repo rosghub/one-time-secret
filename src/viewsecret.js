@@ -8,7 +8,7 @@ async function findSecret(req, res, next) {
     if (req.doc)
         next();
     else
-        res.render('secret', { secret: null })
+        res.render('secret', { secret: null, decrypted: false })
 }
 
 async function handleUserDecrypt(req, res, next) {
@@ -30,7 +30,7 @@ async function handleUserDecrypt(req, res, next) {
                     salt: hash.salt.buffer
                 }, passphrase);
                 await deleteSecret(id);
-                res.render('secret', { secret });
+                res.render('secret', { secret, decrypted: true });
             }
             catch (e) {
                 res.render('decrypt', {
@@ -64,7 +64,7 @@ async function handleDefaultDecrypt(req, res) {
                 salt: secret.salt.buffer
             });
             await deleteSecret(req.params.id);
-            res.render('secret', { secret: message });
+            res.render('secret', { secret: message, decrypted: false });
         }
         catch (e) {
             console.error(e);
