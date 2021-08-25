@@ -12,9 +12,11 @@
     .field-label.is-normal {
         padding-top: 0;
     }
+
     ul {
         list-style: initial;
     }
+
     body {
         padding-bottom: 5em;
     }
@@ -26,10 +28,10 @@
         <section class="section is-medium">
             <div class="container has-text-centered">
                 <p class="title">One Time Secret</p>
-                <p class="subtitle is-size-6-mobile">This app allows you to share a one time secret.<br />Generate a
-                    link to
-                    your secret that
-                    can only be viewed once.</p>
+                <p class="subtitle is-size-6-mobile">
+                    This app allows you to share a one time secret.<br />
+                    Generate a disposable link to your secret that can only be viewed once.
+                </p>
             </div>
         </section>
 
@@ -91,6 +93,7 @@
                     <li>Secrets are encrypted at rest by a default password.</li>
                     <li>Providing your own passphrase will encrypt it with your own passphrase.</li>
                     <li>Secrets have a default TTL of 7 days.</li>
+                    <li>After being revealed once, a secret <strong>cannot</strong> be recovered.</li>
                 </ul>
             </div>
         </div>
