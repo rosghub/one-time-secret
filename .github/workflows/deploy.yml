@@ -18,5 +18,7 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         script: |
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh
           cd ~/dev/one-time-secret
           git pull && npm ci && pm2 restart one-time-secret
