@@ -17,4 +17,11 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
-        script: source ~/.bashrc && cd ~/dev/one-time-secret && git pull && npm ci && pm2 restart one-time-secret
+        script: |
+          export NVM_DIR="~/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+          cd ~/dev/one-time-secret 
+          git pull 
+          npm ci 
+          pm2 restart one-time-secret
