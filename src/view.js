@@ -14,11 +14,10 @@ async function findSecret(req, res, next) {
     if (req.doc)
         next();
     else
-        res.render('secret', { secret: null, decrypted: false })
+        res.render('secret', { secret: null, decrypted: false });
 }
 
 async function revealSecret(req, res) {
-    const { secret } = req.doc;
 
     if (req.doc.userPass) {
         res.render('decrypt', {
@@ -32,12 +31,7 @@ async function revealSecret(req, res) {
         if (reveal) {
             try {
                 // Decrypt with default pass
-                const message = decrypt({
-                    iv: secret.iv.buffer,
-                    message: secret.message.buffer,
-                    authTag: secret.authTag.buffer,
-                    salt: secret.salt.buffer
-                });
+                const message = decrypt(req.doc.hash);
                 await deleteSecret(req.params.id);
                 res.render('secret', { secret: message, decrypted: false });
             }
@@ -52,39 +46,23 @@ async function revealSecret(req, res) {
 }
 
 async function handleUserDecrypt(req, res, next) {
-    if (req.method == 'POST') {
-        const { passphrase } = req.body;
-        const { doc } = req;
-        const { id } = req.params;
+    const { passphrase } = req.body;
+    const { id } = req.params;
 
-        if (!passphrase) {
-            res.status(400);
+    if (!passphrase) {
+        res.status(400);
+    }
+    else {
+        try {
+            const secret = decrypt(req.doc.hash, passphrase);
+            await deleteSecret(id);
+            res.render('secret', { secret, decrypted: true });
         }
-        else {
-            try {
-                const hash = doc.secret;
-                const secret = decrypt({
-                    iv: hash.iv.buffer,
-                    message: hash.message.buffer,
-                    authTag: hash.authTag.buffer,
-                    salt: hash.salt.buffer
-                }, passphrase);
-                await deleteSecret(id);
-                res.render('secret', { secret, decrypted: true });
-            }
-            catch (e) {
-                res.render('decrypt', {
-                    link: req.originalUrl,
-                    wrongPass: true
-                })
-            }
+        catch (e) {
+            res.render('decrypt', {
+                link: req.originalUrl,
+                wrongPass: true
+            })
         }
     }
-    else if (req.method == 'GET' && req.doc.userPass)
-        res.render('decrypt', {
-            link: req.originalUrl,
-            wrongPass: false
-        });
-    else
-        next();
 }

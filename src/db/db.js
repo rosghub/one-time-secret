@@ -1,5 +1,10 @@
 const { MongoClient } = require('mongodb');
-const { MONGO_URL, MONGO_TABLE, MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS } = require('./../constants');
+const {
+    MONGO_URL,
+    MONGO_TABLE,
+    MONGO_INDEX_TTL,
+    DB_SERVER_TIMEOUT_MS
+} = require('./../constants');
 
 const client = new MongoClient(MONGO_URL, {
     serverSelectionTimeoutMS: DB_SERVER_TIMEOUT_MS
@@ -7,7 +12,7 @@ const client = new MongoClient(MONGO_URL, {
 
 const db = client.db(MONGO_TABLE);
 
-async function connectMongo() {
+async function connectDB() {
     console.log('Establing DB connection...');
     return client.connect().then(async client => {
         console.log('Mongo connection successful');
@@ -29,6 +34,7 @@ async function connectMongo() {
 }
 
 async function checkIndexes() {
+    // Create TTL index on secrets collection
     const indexes = await client.db(MONGO_TABLE).collection('secrets').indexes();
     const exists = indexes.find(e => e.name == MONGO_INDEX_TTL)
     if (!exists) {
@@ -49,5 +55,5 @@ async function checkIndexes() {
 
 module.exports = {
     db,
-    connectMongo
+    connectDB
 };

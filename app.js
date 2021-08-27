@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-const { connectMongo } = require('./src/db/db');
+const { connectDB } = require('./src/db/db');
 const generate = require('./src/generate');
 const view = require('./src/view');
 const constants = require('./src/constants');
@@ -21,7 +21,7 @@ app.use((_req, res) => {
     res.render('error');
 });
 
-connectMongo().then(({ success }) => {
+connectDB().then(({ success }) => {
     if (success) {
         app.listen(constants.PORT, '127.0.0.1');
         console.log('listening at port: ' + constants.PORT);

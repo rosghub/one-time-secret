@@ -3,13 +3,15 @@ const { encrypt } = require('../crypto');
 const { db } = require('./db');
 const { DEFAULT_SECRET_TTL } = require('./../constants');
 
-// ttl in days (86400000)
 function storeSecret(secret, password, ttl) {
     const _ttl = ttl || DEFAULT_SECRET_TTL;
+    const _password = (password != null && password.length > 0) ? password : null;
+
+    // TTL days to ms
     const expiresAt = new Date(new Date().getTime() + 86400000 * _ttl);
     const doc = {
-        secret: encrypt(secret, password),
-        userPass: password != null && password.length > 0,
+        hash: encrypt(secret, _password),
+        userPass: _password != null,
         expiresAt
     };
 
@@ -31,8 +33,19 @@ function getSecret(id) {
         const collection = db.collection('secrets');
         const doc = { _id: new ObjectId(id) };
 
-        //return collection.findOne(doc).then(res => res);
-        return collection.findOne(doc);
+        return collection.findOne(doc).then(doc => {
+            if (doc) {
+                const { hash } = doc;
+                doc.hash = {
+                    iv: hash.iv.buffer,
+                    message: hash.message.buffer,
+                    authTag: hash.authTag.buffer,
+                    salt: hash.salt.buffer
+                };
+                return doc;
+            }
+            return null;
+        })
     }
     catch (e) { }
     return null;
