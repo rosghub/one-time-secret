@@ -1,19 +1,22 @@
 /*
     Render EJS templates with mock data for page design
-    Used as express middleware
  */
 
-module.exports = () => {
-    return (req, res, next) => {
-        if (req.method == 'GET') {
-            if (req.originalUrl == '/generate')
-                return res.render('generate', { link: 'link' });
-            else if (req.originalUrl.startsWith('/view'))
-                //return res.render('secret', { secret: 'this is a long secretthis is a long secretthis is a long secretthis is a long secretthis is a long secretthis is a long secretthis is a long secret' });
-                return res.render('secret', { secret: 'true', decrypted: false });
-                //return res.render('decrypt', { link: '/view/1234', wrongPass: true });
-        }
+const { Router } = require('express');
 
-        next();
-    }
-}
+module.exports = Router()
+    .get('/generate', (req, res) => {
+        res.render('generate', { link: 'link' });
+    })
+    .get('/spoiler', (req, res) => {
+        res.render('spoiler');
+    })
+    .get('/view', (req, res) => {
+        res.render('secret', { secret: 'true', decrypted: false });
+    })
+    .get('/decrypt', (req, res) => {
+        res.render('decrypt', { link: '/view/1234', wrongPass: true });
+    })
+    .use((req, res) => {
+        res.render('error');
+    });
