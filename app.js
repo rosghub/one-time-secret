@@ -17,6 +17,10 @@ app.get('/', (_req, res) => {
 app.post('/generate', generate);
 app.use('/view', view);
 
+app.use((_req, res) => {
+    res.render('error');
+});
+
 connectMongo().then(({ success }) => {
     if (success) {
         app.listen(constants.PORT, '127.0.0.1');

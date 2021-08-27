@@ -3,7 +3,7 @@ const { getSecret, deleteSecret } = require('./db/secrets');
 const { decrypt } = require('./crypto');
 
 module.exports = Router()
-    .get('/:id', findSecret, getSecret)
+    .get('/:id', findSecret, revealSecret)
     .post('/:id', findSecret, handleUserDecrypt);
 
 
@@ -17,7 +17,7 @@ async function findSecret(req, res, next) {
         res.render('secret', { secret: null, decrypted: false })
 }
 
-async function getSecret(req, res) {
+async function revealSecret(req, res) {
     const { secret } = req.doc;
 
     if (req.doc.userPass) {
