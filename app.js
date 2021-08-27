@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const { connectMongo } = require('./src/db/db');
 const generate = require('./src/generate');
-const viewSecret = require('./src/viewsecret');
+const view = require('./src/view');
 const constants = require('./src/constants');
 
 const app = express();
@@ -15,8 +15,7 @@ app.get('/', (_req, res) => {
     res.render('index', { maxLen: constants.MAX_LEN })
 });
 app.post('/generate', generate);
-app.get('/view/:id', viewSecret);
-app.post('/view/:id', viewSecret);
+app.use('/view', view);
 
 connectMongo().then(({ success }) => {
     if (success) {

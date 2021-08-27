@@ -1,5 +1,11 @@
+const { Router } = require('express');
 const { getSecret, deleteSecret } = require('./db/secrets');
 const { decrypt } = require('./crypto');
+
+module.exports = Router()
+    .get('/:id', findSecret, getSecret)
+    .post('/:id', findSecret, handleUserDecrypt);
+
 
 async function findSecret(req, res, next) {
     const { id } = req.params;
@@ -9,6 +15,40 @@ async function findSecret(req, res, next) {
         next();
     else
         res.render('secret', { secret: null, decrypted: false })
+}
+
+async function getSecret(req, res) {
+    const { secret } = req.doc;
+
+    if (req.doc.userPass) {
+        res.render('decrypt', {
+            link: req.originalUrl,
+            wrongPass: false
+        });
+    }
+    else {
+        const reveal = req.query.reveal === 'true';
+
+        if (reveal) {
+            try {
+                // Decrypt with default pass
+                const message = decrypt({
+                    iv: secret.iv.buffer,
+                    message: secret.message.buffer,
+                    authTag: secret.authTag.buffer,
+                    salt: secret.salt.buffer
+                });
+                await deleteSecret(req.params.id);
+                res.render('secret', { secret: message, decrypted: false });
+            }
+            catch (e) {
+                console.error(e);
+                res.status(500);
+            }
+        }
+        else
+            res.render('spoiler');
+    }
 }
 
 async function handleUserDecrypt(req, res, next) {
@@ -48,35 +88,3 @@ async function handleUserDecrypt(req, res, next) {
     else
         next();
 }
-
-// method=GET && userPass=false
-async function handleDefaultDecrypt(req, res) {
-    const { secret } = req.doc;
-    const reveal = req.query.reveal === 'true';
-
-    if (reveal) {
-        try {
-            // Decrypt with default pass
-            const message = decrypt({
-                iv: secret.iv.buffer,
-                message: secret.message.buffer,
-                authTag: secret.authTag.buffer,
-                salt: secret.salt.buffer
-            });
-            await deleteSecret(req.params.id);
-            res.render('secret', { secret: message, decrypted: false });
-        }
-        catch (e) {
-            console.error(e);
-            res.status(500);
-        }
-    }
-    else
-        res.render('spoiler');
-}
-
-module.exports = [
-    findSecret,
-    handleUserDecrypt,
-    handleDefaultDecrypt
-];
