@@ -10,6 +10,14 @@ app.set('trust proxy', '127.0.0.1');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
+// Redirect http to https in production
+app.use((req, res, next) => {
+    if (!req.secure && process.env.NODE_ENV !== 'development')
+        return res.redirect('https://' + req.get('host') + req.url);
+
+    next();
+});
+
 app.get('/', (_req, res) => {
     res.render('index', { maxLen: constants.MAX_LEN })
 });
