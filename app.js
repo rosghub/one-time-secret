@@ -23,7 +23,9 @@ app.use((_req, res) => {
 
 connectDB().then(({ success }) => {
     if (success) {
-        app.listen(constants.PORT, '127.0.0.1');
+        app.listen(constants.PORT, '127.0.0.1', () => {
+            app.emit('started');
+        });
         console.log('listening at port: ' + constants.PORT);
     }
     else

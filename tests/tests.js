@@ -7,9 +7,27 @@ const { parse } = require('node-html-parser');
 chai.use(require('chai-http'));
 chai.should();
 
+before(done => {
+    app.on('started', () => { done(); });
+});
+
 describe('Test site config', () => {
-    it('Should properly render index', () => {
-            chai.request(app).get('/')
+    it('Express is properly configured', () => {
+        expect(constants.PORT).not.to.be.null;
+        expect(app.get('view engine')).to.be.equal('ejs');
+    });
+
+    it('App is served properly', () => {
+        chai.request(`http://localhost:${constants.PORT}`)
+        .get('/')
+        .end((err, res) => {
+            expect(err).to.be.null;
+            res.should.have.status(200);
+        });
+    });
+
+    it('Index is properly rendered', () => {
+        chai.request(app).get('/')
             .end((err, res) => {
                 expect(err).to.be.null;
                 res.should.have.status(200);
@@ -20,5 +38,5 @@ describe('Test site config', () => {
                 const secretMaxLen = root.querySelector('textarea[name="secret"]').attrs.maxlength;
                 expect(parseInt(secretMaxLen)).to.be.equal(constants.MAX_LEN);
             });
-    })
-})
+    });
+});
