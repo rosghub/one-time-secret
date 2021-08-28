@@ -12,6 +12,11 @@ before(done => {
 });
 
 describe('Test site config', () => {
+    it('Env vars sourced', () => {
+        const { PORT } = process.env;
+        PORT && expect(PORT).to.be.equal(constants.PORT);
+    });
+
     it('Express is properly configured', () => {
         expect(constants.PORT).not.to.be.null;
         expect(app.get('view engine')).to.be.equal('ejs');
