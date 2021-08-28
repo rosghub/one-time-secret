@@ -18,6 +18,7 @@ app.post('/generate', generate);
 app.use('/view', view);
 
 app.use((_req, res) => {
+    res.status(404);
     res.render('error');
 });
 

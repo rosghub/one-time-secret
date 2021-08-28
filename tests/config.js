@@ -11,6 +11,8 @@ before(done => {
     app.on('started', () => { done(); });
 });
 
+const appUrl = 'http://localhost:' + constants.PORT;
+
 describe('Test site config', () => {
     it('Env vars sourced', () => {
         const { PORT } = process.env;
@@ -22,17 +24,18 @@ describe('Test site config', () => {
         expect(app.get('view engine')).to.be.equal('ejs');
     });
 
-    it('App is served properly', () => {
-        chai.request(`http://localhost:${constants.PORT}`)
-        .get('/')
-        .end((err, res) => {
-            expect(err).to.be.null;
-            res.should.have.status(200);
-        });
+    it('App is served properly', (done) => {
+        chai.request(appUrl)
+            .get('/')
+            .end((err, res) => {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                done();
+            });
     });
 
-    it('Index is properly rendered', () => {
-        chai.request(app).get('/')
+    it('Index is properly rendered', (done) => {
+        chai.request(appUrl).get('/')
             .end((err, res) => {
                 expect(err).to.be.null;
                 res.should.have.status(200);
@@ -42,6 +45,24 @@ describe('Test site config', () => {
 
                 const secretMaxLen = root.querySelector('textarea[name="secret"]').attrs.maxlength;
                 expect(parseInt(secretMaxLen)).to.be.equal(constants.MAX_LEN);
+
+                done();
+            });
+    });
+
+    it('Unknown route renders error page', (done) => {
+        chai.request(appUrl)
+            .get('/unknown')
+            .end((err, res) => {
+                expect(err).to.be.null;
+                res.should.have.status(404);
+
+                const root = parse(res.text);
+
+                expect(root.querySelector('.subtitle').text.trim())
+                    .to.be.a('string').and.match(/^Page not found/);
+
+                done();
             });
     });
 });
