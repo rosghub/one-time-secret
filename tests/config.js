@@ -11,17 +11,6 @@ const appUrl = 'http://localhost:' + constants.PORT;
 
 describe('Test site config', () => {
 
-    it('App is served properly', (done) => {
-        chai.request(appUrl)
-            .get('/')
-            .end((err, res) => {
-                expect(err).to.be.null;
-                res.should.have.status(200);
-                done();
-            });
-    });
-
-
     it('Env vars sourced', () => {
         const { PORT } = process.env;
         PORT && expect(PORT).to.be.equal(constants.PORT);
@@ -31,6 +20,7 @@ describe('Test site config', () => {
         expect(constants.PORT).not.to.be.null;
         expect(app.get('view engine')).to.be.equal('ejs');
     });
+
     it('Index is properly rendered', (done) => {
         chai.request(appUrl).get('/')
             .end((err, res) => {
