@@ -7,22 +7,9 @@ const { parse } = require('node-html-parser');
 chai.use(require('chai-http'));
 chai.should();
 
-before(done => {
-    app.on('started', () => { done(); });
-});
-
 const appUrl = 'http://localhost:' + constants.PORT;
 
 describe('Test site config', () => {
-    it('Env vars sourced', () => {
-        const { PORT } = process.env;
-        PORT && expect(PORT).to.be.equal(constants.PORT);
-    });
-
-    it('Express is properly configured', () => {
-        expect(constants.PORT).not.to.be.null;
-        expect(app.get('view engine')).to.be.equal('ejs');
-    });
 
     it('App is served properly', (done) => {
         chai.request(appUrl)
@@ -34,6 +21,16 @@ describe('Test site config', () => {
             });
     });
 
+
+    it('Env vars sourced', () => {
+        const { PORT } = process.env;
+        PORT && expect(PORT).to.be.equal(constants.PORT);
+    });
+
+    it('Express is properly configured', () => {
+        expect(constants.PORT).not.to.be.null;
+        expect(app.get('view engine')).to.be.equal('ejs');
+    });
     it('Index is properly rendered', (done) => {
         chai.request(appUrl).get('/')
             .end((err, res) => {

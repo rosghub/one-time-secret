@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha tests --exit",
+    "test": "mocha tests --require tests/hooks --exit",
     "start": "NODE_ENV=production node app.js",
     "dev": "node app.js"
   },
