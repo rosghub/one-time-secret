@@ -3,7 +3,7 @@ const chai = require('chai');
 const app = require('./../app');
 const constants = require('./../src/constants');
 const { parse } = require('node-html-parser');
-const { off } = require('./../app');
+const url = require('url');
 
 chai.use(require('chai-http'));
 chai.should();
@@ -25,8 +25,8 @@ describe('Test link generation', () => {
 
                 // check link
                 const root = parse(res.text)
-                link = root.querySelector('#secret').text.trim();
-                expect(link).to.be.a('string').and.match(/^https?:\/\/[^\/]+\/view\/\w+/);
+                link = url.parse(root.querySelector('#secret').text.trim());
+                expect(link.href).to.be.a('string').and.match(/^https?:\/\/[^\/]+\/view\/\w+/);
 
                 // check ttl
                 const ttl = root.querySelector('#ttl').text.trim().split(' ')[0];
@@ -35,9 +35,11 @@ describe('Test link generation', () => {
             });
     });
 
-/*
-    it('Generates link unsuccessfully', (done) => {
-
-    })
-*/
+    it('Views link without reveal', (done) => {
+        chai.request(`${link.protocol}//${link.host}`)
+            .get(link.pathname)
+            .end((err, res) => {
+                //todo
+            })
+    });
 });
