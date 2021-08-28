@@ -1,10 +1,13 @@
-/*
-    Render EJS templates with mock data for page design
- */
+const express = require('express');
+const constants = require('./src/constants');
+const app = express();
 
-const { Router } = require('express');
+const { PORT } = constants;
 
-module.exports = Router()
+app.set('view engine', 'ejs')
+    .get('/', (req, res) => {
+        res.render('index', { maxLen: constants.MAX_LEN });
+    })
     .get('/generate', (req, res) => {
         res.render('generate', { link: 'link' });
     })
@@ -20,3 +23,7 @@ module.exports = Router()
     .use((req, res) => {
         res.render('error');
     });
+
+app.listen(PORT, '127.0.0.1', () => {
+    console.log('EJS Template designer mounted at http://localhost:' + PORT);
+});

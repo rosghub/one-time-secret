@@ -9,7 +9,6 @@ const app = express();
 app.set('trust proxy', '127.0.0.1');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-//app.use(require('./dev/design'));
 
 app.get('/', (_req, res) => {
     res.render('index', { maxLen: constants.MAX_LEN })
