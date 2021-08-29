@@ -3,6 +3,29 @@ import { encrypt, Hash } from '../crypto-utils';
 import { db } from './db';
 import { DEFAULT_SECRET_TTL } from './../constants';
 
+
+interface ISecret {
+    userPass: boolean,
+    expiresAt: Date
+}
+
+// Secret as stored by mongodb
+interface MongoSecret extends ISecret {
+    hash: MongoHash
+}
+
+// Hash as stored by mongodb
+type MongoHash = {
+    iv: Binary,
+    message: Binary,
+    authTag: Binary,
+    salt: Binary
+};
+
+export interface Secret extends ISecret {
+    hash: Hash
+}
+
 export type StoreSecretResult = {
     insertedId: string,
     ttl?: string
@@ -34,26 +57,6 @@ export function storeSecret(secret: string, password: string, ttl: string): Prom
         return { insertedId: null };
     });
 }
-
-interface ISecret {
-    userPass: boolean,
-    expiresAt: Date
-}
-
-export interface Secret extends ISecret {
-    hash: Hash
-}
-
-interface MongoSecret extends ISecret {
-    hash: MongoHash
-}
-
-type MongoHash = {
-    iv: Binary,
-    message: Binary,
-    authTag: Binary,
-    salt: Binary
-};
 
 export function getSecret(id: string): Promise<Secret> {
     try {
