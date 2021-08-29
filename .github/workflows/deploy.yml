@@ -23,4 +23,4 @@ jobs:
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
           cd ~/dev/one-time-secret
-          git pull && npm ci && pm2 restart one-time-secret
+          git pull && npm ci --production && pm2 restart one-time-secret
