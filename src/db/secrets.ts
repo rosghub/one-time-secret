@@ -1,29 +1,13 @@
-import { ObjectId, InsertOneResult, Binary } from 'mongodb';
+import { ObjectId, InsertOneResult, Binary, Document } from 'mongodb';
 import { encrypt, Hash } from '../crypto-utils';
 import { db } from './db';
 import { DEFAULT_SECRET_TTL } from './../constants';
 
 
-interface ISecret {
+export type Secret = {
+    hash: Hash,
     userPass: boolean,
     expiresAt: Date
-}
-
-// Secret as stored by mongodb
-interface MongoSecret extends ISecret {
-    hash: MongoHash
-}
-
-// Hash as stored by mongodb
-type MongoHash = {
-    iv: Binary,
-    message: Binary,
-    authTag: Binary,
-    salt: Binary
-};
-
-export interface Secret extends ISecret {
-    hash: Hash
 }
 
 export type StoreSecretResult = {
@@ -63,7 +47,7 @@ export function getSecret(id: string): Promise<Secret> {
         const collection = db.collection('secrets');
         const doc = { _id: new ObjectId(id) };
 
-        return collection.findOne(doc).then((doc: MongoSecret) => {
+        return collection.findOne(doc).then((doc: Document) => {
             if (doc) {
                 return {
                     hash: {
