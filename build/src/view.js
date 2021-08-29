@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var Router = require('express').Router;
 var _a = require('./db/secrets'), getSecret = _a.getSecret, deleteSecret = _a.deleteSecret;
-var decrypt = require('./crypto').decrypt;
+var decrypt = require('./crypto-utils').decrypt;
 module.exports = Router()
     .get('/:id', findSecret, revealSecret)
     .post('/:id', findSecret, handleUserDecrypt);

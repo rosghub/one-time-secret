@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { getSecret, deleteSecret } = require('./db/secrets');
-const { decrypt } = require('./crypto');
+const { decrypt } = require('./crypto-utils');
 
 module.exports = Router()
     .get('/:id', findSecret, revealSecret)

@@ -1,4 +1,11 @@
-const crypto = require('crypto');
+import * as crypto from 'crypto';
+
+export type Hash = {
+    iv: Buffer,
+    message: Buffer,
+    authTag: Buffer,
+    salt: Buffer
+};
 
 const defaultPass = '357e231089bef2841bde3a53aa62b11e5d2874a5501a7ce4d46a95e616b5e17a';
 
@@ -32,24 +39,24 @@ const KEY_BYTE_LEN = 32;
  * */
 const SALT_BYTE_LEN = 16;
 
-const getIV = () => crypto.randomBytes(IV_BYTE_LEN);
-const getRandomKey = () => crypto.randomBytes(KEY_BYTE_LEN);
+const getIV = (): Buffer => crypto.randomBytes(IV_BYTE_LEN);
+const getRandomKey = (): Buffer => crypto.randomBytes(KEY_BYTE_LEN);
 
 /**
  * To prevent rainbow table attacks
  * */
-const getSalt = () => crypto.randomBytes(SALT_BYTE_LEN);
+const getSalt = (): Buffer => crypto.randomBytes(SALT_BYTE_LEN);
 
 /**
  * 
- * @param {Buffer} password - The password to be used for generating key
+ * @param {string} password - The password to be used for generating key
  * 
  * To be used when key needs to be generated based on password.
  * The caller of this function has the responsibility to clear 
  * the Buffer after the key generation to prevent the password 
  * from lingering in the memory
  */
-function getKeyFromPassword(password, salt) {
+function getKeyFromPassword(password: string, salt: Buffer): Buffer {
     return crypto.scryptSync(password, salt, KEY_BYTE_LEN);
 }
 
@@ -62,7 +69,7 @@ function getKeyFromPassword(password, salt) {
  * the Buffer after the encryption to prevent the message text 
  * and the key from lingering in the memory
  */
-function encrypt(messagetext, password) {
+export function encrypt(messagetext: Buffer, password: string): Hash {
     const pass = password || defaultPass;
     const salt = getSalt();
     const key = getKeyFromPassword(pass, salt);
@@ -73,7 +80,6 @@ function encrypt(messagetext, password) {
         { 'authTagLength': AUTH_TAG_BYTE_LEN });
     let encryptedMessage = cipher.update(messagetext);
     encryptedMessage = Buffer.concat([encryptedMessage, cipher.final()]);
-    //return Buffer.concat([iv, encryptedMessage, cipher.getAuthTag()]);
 /*
     return {
         iv: iv.toString('hex'),
@@ -105,7 +111,7 @@ function decrypt(ciphertext, key) {
     const iv = ciphertext.slice(0, IV_BYTE_LEN);
     const encryptedMessage = ciphertext.slice(IV_BYTE_LEN, -1 * AUTH_TAG_BYTE_LEN);
     */
-function decrypt(hash, password) {
+export function decrypt(hash: Hash, password: string): string {
     const { iv, message, authTag, salt } = hash;
     const pass = password || defaultPass;
     const key = getKeyFromPassword(pass, salt);
@@ -116,7 +122,7 @@ function decrypt(hash, password) {
     decipher.setAuthTag(authTag);
     let messagetext = decipher.update(message);
     messagetext = Buffer.concat([messagetext, decipher.final()]);
-    return messagetext;
+    return messagetext.toString();
 }
 
 /*
@@ -150,8 +156,3 @@ describe('CryptoUtils', function() {
   });
 });
 */
-
-module.exports = {
-    encrypt,
-    decrypt
-};

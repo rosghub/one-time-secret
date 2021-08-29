@@ -1,5 +1,5 @@
 var ObjectId = require('mongodb').ObjectId;
-var encrypt = require('../crypto').encrypt;
+var encrypt = require('../crypto-utils').encrypt;
 var db = require('./db').db;
 var DEFAULT_SECRET_TTL = require('./../constants').DEFAULT_SECRET_TTL;
 function storeSecret(secret, password, ttl) {

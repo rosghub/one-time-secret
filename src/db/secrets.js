@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const { encrypt } = require('../crypto');
+const { encrypt } = require('../crypto-utils');
 const { db } = require('./db');
 const { DEFAULT_SECRET_TTL } = require('./../constants');
 
