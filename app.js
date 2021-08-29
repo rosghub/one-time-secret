@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Redirect http to https in production
 app.use((req, res, next) => {
-    if (!req.secure && process.env.NODE_ENV !== 'development')
+    if (!req.secure && process.env.NODE_ENV == 'production')
         return res.redirect('https://' + req.get('host') + req.url);
 
     next();
