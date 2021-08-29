@@ -69,7 +69,7 @@ function getKeyFromPassword(password: string, salt: Buffer): Buffer {
  * the Buffer after the encryption to prevent the message text 
  * and the key from lingering in the memory
  */
-export function encrypt(messagetext: Buffer, password: string): Hash {
+export function encrypt(messagetext: string, password: string): Hash {
     const pass = password || defaultPass;
     const salt = getSalt();
     const key = getKeyFromPassword(pass, salt);
