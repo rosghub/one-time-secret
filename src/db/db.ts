@@ -15,7 +15,8 @@ export type ConnectionResult = {
 
 export async function connectDB(): Promise<ConnectionResult> {
     console.log('Establing DB connection...');
-    return client.connect().then(async client => {
+
+    return client.connect().then(async (client: MongoClient) => {
         console.log('Mongo connection successful');
 
         await checkIndexes();
@@ -24,6 +25,7 @@ export async function connectDB(): Promise<ConnectionResult> {
             success: true,
             client
         };
+
     }).catch(err => {
         console.error(err);
         console.log('Mongo connection failed');
