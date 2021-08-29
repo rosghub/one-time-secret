@@ -56,3 +56,4 @@ module.exports = {
     getSecret: getSecret,
     deleteSecret: deleteSecret
 };
+//# sourceMappingURL=secrets.js.map

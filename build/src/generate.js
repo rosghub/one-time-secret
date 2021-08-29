@@ -88,3 +88,4 @@ module.exports = [
     validateSecret,
     generateSecret
 ];
+//# sourceMappingURL=generate.js.map
