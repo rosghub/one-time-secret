@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 const express = require('express');
 require('dotenv').config();
 const { connectDB } = require('./src/db/db');
@@ -11,25 +13,25 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
 // Redirect http to https in production
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next) => {
     if (!req.secure && process.env.NODE_ENV == 'production')
         return res.redirect('https://' + req.get('host') + req.url);
 
     next();
 });
 
-app.get('/', (_req, res) => {
+app.get('/', (_req, res: Response) => {
     res.render('index', { maxLen: constants.MAX_LEN })
 });
 app.post('/generate', generate);
 app.use('/view', view);
 
-app.use((_req, res) => {
+app.use((_req, res: Response) => {
     res.status(404);
     res.render('error');
 });
 
-connectDB().then(({ success }) => {
+connectDB().then(({ success }: { success: boolean }) => {
     if (success) {
         app.listen(constants.PORT, '127.0.0.1', () => {
             app.emit('started');
