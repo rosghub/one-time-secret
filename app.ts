@@ -1,11 +1,10 @@
-import { Request, Response } from "express";
-
-const express = require('express');
 require('dotenv').config();
+import constants from './src/constants';
 const { connectDB } = require('./src/db/db');
-const generate = require('./src/generate');
-const view = require('./src/view');
-const constants = require('./src/constants');
+import { Request, Response } from "express";
+import express = require('express');
+import generate = require('./src/generate');
+import view = require('./src/view');
 
 const app = express();
 app.set('trust proxy', '127.0.0.1');

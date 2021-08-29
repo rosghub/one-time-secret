@@ -1,10 +1,6 @@
-const { MongoClient } = require('mongodb');
-const {
-    MONGO_URL,
-    MONGO_TABLE,
-    MONGO_INDEX_TTL,
-    DB_SERVER_TIMEOUT_MS
-} = require('./../constants');
+import { MongoClient } from "mongodb";
+import constants from './../constants';
+const { MONGO_URL, MONGO_TABLE, MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS } = constants;
 
 const client = new MongoClient(MONGO_URL, {
     serverSelectionTimeoutMS: DB_SERVER_TIMEOUT_MS

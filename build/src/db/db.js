@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,9 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var MongoClient = require('mongodb').MongoClient;
-var _a = require('./../constants'), MONGO_URL = _a.MONGO_URL, MONGO_TABLE = _a.MONGO_TABLE, MONGO_INDEX_TTL = _a.MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS = _a.DB_SERVER_TIMEOUT_MS;
-var client = new MongoClient(MONGO_URL, {
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongodb_1 = require("mongodb");
+var constants_1 = require("./../constants");
+var MONGO_URL = constants_1.default.MONGO_URL, MONGO_TABLE = constants_1.default.MONGO_TABLE, MONGO_INDEX_TTL = constants_1.default.MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS = constants_1.default.DB_SERVER_TIMEOUT_MS;
+var client = new mongodb_1.MongoClient(MONGO_URL, {
     serverSelectionTimeoutMS: DB_SERVER_TIMEOUT_MS
 });
 var db = client.db(MONGO_TABLE);

@@ -1,6 +1,8 @@
-module.exports = {
-    MAX_LEN: process.env.MAX_LEN || 1024,
-    PORT: process.env.PORT || 3000,
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
+    MAX_LEN: parseInt(process.env.MAX_LEN) || 1024,
+    PORT: parseInt(process.env.PORT) || 3000,
     MONGO_URL: process.env.MONGO_URL || 'mongodb://localhost:27017',
     MONGO_TABLE: 'secrets',
     MONGO_INDEX_TTL: 'expiresAtTTL',
