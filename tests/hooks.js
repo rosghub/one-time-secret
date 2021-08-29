@@ -1,4 +1,4 @@
-const app = require('./../app');
+const app = require('../build/app');
 
 module.exports.mochaHooks = {
     beforeAll: (done) => {

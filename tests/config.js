@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const chai = require('chai');
-const app = require('./../app');
-const constants = require('./../src/constants');
+const app = require('../build/app');
+const constants = require('./../build/src/constants');
 const { parse } = require('node-html-parser');
 
 chai.use(require('chai-http'));
@@ -13,7 +13,7 @@ describe('Test site config', () => {
 
     it('Env vars sourced', () => {
         const { PORT } = process.env;
-        PORT && expect(PORT).to.be.equal(constants.PORT);
+        PORT && expect(parseInt(PORT)).to.be.equal(constants.PORT);
     });
 
     it('Express is properly configured', () => {

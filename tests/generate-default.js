@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const chai = require('chai');
-const constants = require('./../src/constants');
+const constants = require('./../build/src/constants');
 const { parse } = require('node-html-parser');
 const url = require('url');
 
