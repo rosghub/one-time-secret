@@ -36,13 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.connectDB = exports.db = void 0;
 var mongodb_1 = require("mongodb");
-var constants_1 = require("./../constants");
-var MONGO_URL = constants_1.default.MONGO_URL, MONGO_TABLE = constants_1.default.MONGO_TABLE, MONGO_INDEX_TTL = constants_1.default.MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS = constants_1.default.DB_SERVER_TIMEOUT_MS;
-var client = new mongodb_1.MongoClient(MONGO_URL, {
-    serverSelectionTimeoutMS: DB_SERVER_TIMEOUT_MS
+var constants_1 = require("../constants");
+var client = new mongodb_1.MongoClient(constants_1.MONGO_URL, {
+    serverSelectionTimeoutMS: constants_1.DB_SERVER_TIMEOUT_MS
 });
-var db = client.db(MONGO_TABLE);
+exports.db = client.db(constants_1.MONGO_TABLE);
 function connectDB() {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
@@ -73,24 +73,25 @@ function connectDB() {
         });
     });
 }
+exports.connectDB = connectDB;
 function checkIndexes() {
     return __awaiter(this, void 0, void 0, function () {
         var indexes, exists, name_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, client.db(MONGO_TABLE).collection('secrets').indexes()];
+                case 0: return [4 /*yield*/, client.db(constants_1.MONGO_TABLE).collection('secrets').indexes()];
                 case 1:
                     indexes = _a.sent();
-                    exists = indexes.find(function (e) { return e.name == MONGO_INDEX_TTL; });
+                    exists = indexes.find(function (e) { return e.name == constants_1.MONGO_INDEX_TTL; });
                     if (!!exists) return [3 /*break*/, 3];
                     console.log('Index TTL missing, creating it now');
-                    return [4 /*yield*/, db.collection('secrets').createIndex({ expiresAt: 1 }, {
+                    return [4 /*yield*/, exports.db.collection('secrets').createIndex({ expiresAt: 1 }, {
                             expireAfterSeconds: 0,
-                            name: MONGO_INDEX_TTL
+                            name: constants_1.MONGO_INDEX_TTL
                         })];
                 case 2:
                     name_1 = _a.sent();
-                    if (name_1 == MONGO_INDEX_TTL)
+                    if (name_1 == constants_1.MONGO_INDEX_TTL)
                         console.log('Index TTL created');
                     return [3 /*break*/, 4];
                 case 3:
@@ -101,8 +102,4 @@ function checkIndexes() {
         });
     });
 }
-module.exports = {
-    db: db,
-    connectDB: connectDB
-};
 //# sourceMappingURL=db.js.map
