@@ -1,17 +1,18 @@
-const { expect } = require('chai');
-const chai = require('chai');
-const constants = require('../src/constants');
-const { parse } = require('node-html-parser');
-const url = require('url');
-
-chai.use(require('chai-http'));
-chai.should();
-
+import * as chai from 'chai';
+import { expect } from 'chai';
+import * as constants from '../src/constants';
+import { parse } from 'node-html-parser';
+import * as url from 'url';
+import { Done } from 'mocha';
+import * as request from 'superagent';
+import chaiHttp = require('chai-http');
+chai.use(chaiHttp);
 
 describe('Generates and consumes default-encrypted secret', () => {
-    var link;
 
-    it('Generates user-encrypted link with TTL successfully', (done) => {
+    var link: url.UrlWithStringQuery;
+
+    it('Generates user-encrypted link with TTL successfully', (done: Done) => {
         chai.request('http://localhost:' + constants.PORT).post('/generate')
             .type('form')
             .send({
@@ -19,7 +20,7 @@ describe('Generates and consumes default-encrypted secret', () => {
                 passphrase: 'thisismypassword',
                 ttl: '9'
             })
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
 
@@ -37,10 +38,10 @@ describe('Generates and consumes default-encrypted secret', () => {
             });
     });
 
-    it('Views user-encrypted link', (done) => {
+    it('Views user-encrypted link', (done: Done) => {
         chai.request(`${link.protocol}//${link.host}`)
             .get(link.pathname)
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
 
@@ -57,17 +58,17 @@ describe('Generates and consumes default-encrypted secret', () => {
                 expect(form.attrs.method).to.be.equal('POST');
 
                 done();
-            })
+            });
     });
 
-    it('Fails to decrypt user-encrypted link with wrong password', (done) => {
+    it('Fails to decrypt user-encrypted link with wrong password', (done: Done) => {
         chai.request(`${link.protocol}//${link.host}`)
             .post(link.pathname)
             .type('form')
             .send({
                 passphrase: 'wrongpassword'
             })
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
 
@@ -90,17 +91,17 @@ describe('Generates and consumes default-encrypted secret', () => {
                 expect(form.attrs.method).to.be.equal('POST');
 
                 done();
-            })
+            });
     });
 
-    it('Successfully decrypts user-encrypted link', (done) => {
+    it('Successfully decrypts user-encrypted link', (done: Done) => {
         chai.request(`${link.protocol}//${link.host}`)
             .post(link.pathname)
             .type('form')
             .send({
                 passphrase: 'thisismypassword'
             })
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
 
@@ -121,6 +122,6 @@ describe('Generates and consumes default-encrypted secret', () => {
                     .to.be.a('string').and.not.empty;
 
                 done();
-            })
+            });
     });
 });

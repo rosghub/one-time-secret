@@ -1,16 +1,19 @@
-const { expect } = require('chai');
-const chai = require('chai');
-const constants = require('../src/constants');
-const { parse } = require('node-html-parser');
-const url = require('url');
+import * as chai from 'chai';
+import { expect } from 'chai';
+import * as constants from '../src/constants';
+import { parse } from 'node-html-parser';
+import * as url from 'url';
+import * as request from 'superagent';
+import { Done } from 'mocha';
+import chaiHttp = require('chai-http');
+chai.use(chaiHttp);
 
-chai.use(require('chai-http'));
-chai.should();
 
 describe('Generates and consumes default-encrypted secret', () => {
-    var link;
 
-    it('Generates default-encrypted link successfully', (done) => {
+    var link: url.UrlWithStringQuery;
+
+    it('Generates default-encrypted link successfully', (done: Done) => {
         chai.request('http://localhost:' + constants.PORT).post('/generate')
             .type('form')
             .send({
@@ -18,7 +21,7 @@ describe('Generates and consumes default-encrypted secret', () => {
                 passphrase: null,
                 ttl: null
             })
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
 
@@ -36,10 +39,10 @@ describe('Generates and consumes default-encrypted secret', () => {
             });
     });
 
-    it('Views link without reveal', (done) => {
+    it('Views link without reveal', (done: Done) => {
         chai.request(`${link.protocol}//${link.host}`)
             .get(link.pathname)
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
 
@@ -51,14 +54,14 @@ describe('Generates and consumes default-encrypted secret', () => {
                 expect(element.text.trim()).to.be.equal('Click to Reveal');
 
                 done();
-            })
+            });
     });
 
-    it('Reveals default-decrypted secret', (done) => {
+    it('Reveals default-decrypted secret', (done: Done) => {
         chai.request(`${link.protocol}//${link.host}`)
             .get(link.pathname)
             .query({ reveal: true })
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
 
@@ -70,6 +73,6 @@ describe('Generates and consumes default-encrypted secret', () => {
                     .to.be.a('string').and.not.empty;
 
                 done();
-            })
+            });
     });
 });

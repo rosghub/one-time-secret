@@ -1,11 +1,12 @@
 "use strict";
-var expect = require('chai').expect;
-var chai = require('chai');
-var constants = require('../src/constants');
-var parse = require('node-html-parser').parse;
-var url = require('url');
-chai.use(require('chai-http'));
-chai.should();
+Object.defineProperty(exports, "__esModule", { value: true });
+var chai = require("chai");
+var chai_1 = require("chai");
+var constants = require("../src/constants");
+var node_html_parser_1 = require("node-html-parser");
+var url = require("url");
+var chaiHttp = require("chai-http");
+chai.use(chaiHttp);
 describe('Generates and consumes default-encrypted secret', function () {
     var link;
     it('Generates default-encrypted link successfully', function (done) {
@@ -17,15 +18,15 @@ describe('Generates and consumes default-encrypted secret', function () {
             ttl: null
         })
             .end(function (err, res) {
-            expect(err).to.be.null;
-            expect(res).to.have.status(200);
-            var root = parse(res.text);
+            (0, chai_1.expect)(err).to.be.null;
+            (0, chai_1.expect)(res).to.have.status(200);
+            var root = (0, node_html_parser_1.parse)(res.text);
             // check ttl
             var ttl = root.querySelector('#ttl').text.trim().split(' ')[0];
-            expect(ttl).to.be.equal('7');
+            (0, chai_1.expect)(ttl).to.be.equal('7');
             // check link
             link = url.parse(root.querySelector('#secret').text.trim());
-            expect(link.href).to.be.a('string').and.match(/^https?:\/\/[^\/]+\/view\/\w+/);
+            (0, chai_1.expect)(link.href).to.be.a('string').and.match(/^https?:\/\/[^\/]+\/view\/\w+/);
             done();
         });
     });
@@ -33,13 +34,13 @@ describe('Generates and consumes default-encrypted secret', function () {
         chai.request(link.protocol + "//" + link.host)
             .get(link.pathname)
             .end(function (err, res) {
-            expect(err).to.be.null;
-            expect(res).to.have.status(200);
-            var root = parse(res.text);
+            (0, chai_1.expect)(err).to.be.null;
+            (0, chai_1.expect)(res).to.have.status(200);
+            var root = (0, node_html_parser_1.parse)(res.text);
             // Check spoiler reveal link
             var element = root.querySelector('#secret');
-            expect(element, 'Secret element').to.not.be.null;
-            expect(element.text.trim()).to.be.equal('Click to Reveal');
+            (0, chai_1.expect)(element, 'Secret element').to.not.be.null;
+            (0, chai_1.expect)(element.text.trim()).to.be.equal('Click to Reveal');
             done();
         });
     });
@@ -48,12 +49,12 @@ describe('Generates and consumes default-encrypted secret', function () {
             .get(link.pathname)
             .query({ reveal: true })
             .end(function (err, res) {
-            expect(err).to.be.null;
-            expect(res).to.have.status(200);
-            var root = parse(res.text);
-            expect(root.querySelector('.subtitle').text.trim())
+            (0, chai_1.expect)(err).to.be.null;
+            (0, chai_1.expect)(res).to.have.status(200);
+            var root = (0, node_html_parser_1.parse)(res.text);
+            (0, chai_1.expect)(root.querySelector('.subtitle').text.trim())
                 .to.be.a('string').and.match(/^Your secret has been revealed/);
-            expect(root.querySelector('#secret').text.trim())
+            (0, chai_1.expect)(root.querySelector('#secret').text.trim())
                 .to.be.a('string').and.not.empty;
             done();
         });

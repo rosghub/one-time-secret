@@ -1,11 +1,13 @@
-const { expect } = require('chai');
-const chai = require('chai');
-const app = require('../src/app');
-const constants = require('../src/constants');
-const { parse } = require('node-html-parser');
+import * as chai from 'chai';
+import { expect } from 'chai';
+import app from '../src/app';
+import * as constants from '../src/constants';
+import { parse } from 'node-html-parser';
+import { Done } from 'mocha';
+import * as request from 'superagent';
+import chaiHttp = require('chai-http');
+chai.use(chaiHttp);
 
-chai.use(require('chai-http'));
-chai.should();
 
 const appUrl = 'http://localhost:' + constants.PORT;
 
@@ -21,11 +23,11 @@ describe('Test site config', () => {
         expect(app.get('view engine')).to.be.equal('ejs');
     });
 
-    it('Index is properly rendered', (done) => {
+    it('Index is properly rendered', (done: Done) => {
         chai.request(appUrl).get('/')
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
-                res.should.have.status(200);
+                expect(res).to.have.status(200);
 
                 const root = parse(res.text);
                 expect(root.querySelector('title').text).to.be.equal('One Time Secret');
@@ -37,12 +39,12 @@ describe('Test site config', () => {
             });
     });
 
-    it('Unknown route renders error page', (done) => {
+    it('Unknown route renders error page', (done: Done) => {
         chai.request(appUrl)
             .get('/unknown')
-            .end((err, res) => {
+            .end((err, res: request.Response) => {
                 expect(err).to.be.null;
-                res.should.have.status(404);
+                expect(res).to.have.status(404);
 
                 const root = parse(res.text);
 

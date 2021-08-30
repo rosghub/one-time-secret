@@ -1,30 +1,31 @@
 "use strict";
-var expect = require('chai').expect;
-var chai = require('chai');
-var app = require('../src/app');
-var constants = require('../src/constants');
-var parse = require('node-html-parser').parse;
-chai.use(require('chai-http'));
-chai.should();
+Object.defineProperty(exports, "__esModule", { value: true });
+var chai = require("chai");
+var chai_1 = require("chai");
+var app_1 = require("../src/app");
+var constants = require("../src/constants");
+var node_html_parser_1 = require("node-html-parser");
+var chaiHttp = require("chai-http");
+chai.use(chaiHttp);
 var appUrl = 'http://localhost:' + constants.PORT;
 describe('Test site config', function () {
     it('Env vars sourced', function () {
         var PORT = process.env.PORT;
-        PORT && expect(parseInt(PORT)).to.be.equal(constants.PORT);
+        PORT && (0, chai_1.expect)(parseInt(PORT)).to.be.equal(constants.PORT);
     });
     it('Express is properly configured', function () {
-        expect(constants.PORT).not.to.be.null;
-        expect(app.get('view engine')).to.be.equal('ejs');
+        (0, chai_1.expect)(constants.PORT).not.to.be.null;
+        (0, chai_1.expect)(app_1.default.get('view engine')).to.be.equal('ejs');
     });
     it('Index is properly rendered', function (done) {
         chai.request(appUrl).get('/')
             .end(function (err, res) {
-            expect(err).to.be.null;
-            res.should.have.status(200);
-            var root = parse(res.text);
-            expect(root.querySelector('title').text).to.be.equal('One Time Secret');
+            (0, chai_1.expect)(err).to.be.null;
+            (0, chai_1.expect)(res).to.have.status(200);
+            var root = (0, node_html_parser_1.parse)(res.text);
+            (0, chai_1.expect)(root.querySelector('title').text).to.be.equal('One Time Secret');
             var secretMaxLen = root.querySelector('textarea[name="secret"]').attrs.maxlength;
-            expect(parseInt(secretMaxLen)).to.be.equal(constants.MAX_LEN);
+            (0, chai_1.expect)(parseInt(secretMaxLen)).to.be.equal(constants.MAX_LEN);
             done();
         });
     });
@@ -32,10 +33,10 @@ describe('Test site config', function () {
         chai.request(appUrl)
             .get('/unknown')
             .end(function (err, res) {
-            expect(err).to.be.null;
-            res.should.have.status(404);
-            var root = parse(res.text);
-            expect(root.querySelector('.subtitle').text.trim())
+            (0, chai_1.expect)(err).to.be.null;
+            (0, chai_1.expect)(res).to.have.status(404);
+            var root = (0, node_html_parser_1.parse)(res.text);
+            (0, chai_1.expect)(root.querySelector('.subtitle').text.trim())
                 .to.be.a('string').and.match(/^Page not found/);
             done();
         });
