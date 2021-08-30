@@ -1,6 +1,7 @@
 "use strict";
-var express = require('express');
-var constants = require('./src/constants');
+Object.defineProperty(exports, "__esModule", { value: true });
+var express = require("express");
+var constants = require("./constants");
 var app = express();
 var PORT = constants.PORT;
 app.set('view engine', 'ejs')

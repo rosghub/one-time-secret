@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 var express = require("express");
-var constants = require("./src/constants");
-var db_1 = require("./src/db/db");
-var generate_1 = require("./src/generate");
-var view_1 = require("./src/view");
+var constants = require("./constants");
+var db_1 = require("./db/db");
+var generate_1 = require("./generate");
+var view_1 = require("./view");
 var app = express();
 app.set('trust proxy', '127.0.0.1');
 app.set('view engine', 'ejs');

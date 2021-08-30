@@ -8,7 +8,6 @@
         "strictNullChecks": false
     },
     "include": [
-        "./src/**/*",
-        "designer.js"
+        "./src/**/*"
     ]
 }

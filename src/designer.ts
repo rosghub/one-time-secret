@@ -1,26 +1,27 @@
-const express = require('express');
-const constants = require('./src/constants');
+import * as express from 'express';
+import { Request, Response } from 'express';
+import * as constants from './constants';
 const app = express();
 
 const { PORT } = constants;
 
 app.set('view engine', 'ejs')
-    .get('/', (req, res) => {
+    .get('/', (req: Request, res: Response) => {
         res.render('index', { maxLen: constants.MAX_LEN });
     })
-    .get('/generate', (req, res) => {
+    .get('/generate', (req: Request, res: Response) => {
         res.render('generate', { link: 'link' });
     })
-    .get('/spoiler', (req, res) => {
+    .get('/spoiler', (req: Request, res: Response) => {
         res.render('spoiler');
     })
-    .get('/view', (req, res) => {
+    .get('/view', (req: Request, res: Response) => {
         res.render('secret', { secret: 'true', decrypted: false });
     })
-    .get('/decrypt', (req, res) => {
+    .get('/decrypt', (req: Request, res: Response) => {
         res.render('decrypt', { link: '/view/1234', wrongPass: true });
     })
-    .use((req, res) => {
+    .use((req: Request, res: Response) => {
         res.render('error');
     });
 
