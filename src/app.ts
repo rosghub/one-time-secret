@@ -1,11 +1,10 @@
 require('dotenv').config();
 import { Request, Response } from 'express';
 import * as express from 'express';
-import * as constants from './src/constants';
-import { connectDB } from './src/db/db';
-import generate from './src/generate';
-import view from './src/view';
-import { ConnectionResult } from './src/db/db';
+import * as constants from './constants';
+import { connectDB, ConnectionResult } from './db/db';
+import generate from './generate';
+import view from './view';
 
 const app = express();
 app.set('trust proxy', '127.0.0.1');
