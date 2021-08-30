@@ -4,7 +4,6 @@ exports.mochaHooks = void 0;
 var app_1 = require("../src/app");
 exports.mochaHooks = {
     beforeAll: function (done) {
-        console.log('RUNNING HOOKS');
         app_1.default.on('started', function () { done(); });
     }
 };
