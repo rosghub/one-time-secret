@@ -5,7 +5,7 @@
   "main": "build/app.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "test": "mocha tests --require tests/hooks --exit",
+    "test": "npm run compile && mocha tests --require tests/hooks --exit",
     "start": "NODE_OPTIONS=--enable-source-maps NODE_ENV=production node build/app.js",
     "dev": "NODE_OPTIONS=--enable-source-maps NODE_ENV=development node build/app.js",
     "watch": "npx tsc -w",
