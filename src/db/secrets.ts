@@ -1,6 +1,6 @@
 import { ObjectId, InsertOneResult, Document } from 'mongodb';
 import { encrypt, Hash } from '../crypto-utils';
-import { db } from './db';
+import db from './db';
 import { DEFAULT_SECRET_TTL } from './../constants';
 
 

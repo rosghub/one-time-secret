@@ -1,12 +1,12 @@
-import { Document, MongoClient } from "mongodb";
+import { MongoClient } from "mongodb";
 import { MONGO_URL, MONGO_TABLE, MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS } from '../constants';
 
 const client = new MongoClient(MONGO_URL, {
     serverSelectionTimeoutMS: DB_SERVER_TIMEOUT_MS
 });
 
-export const db = client.db(MONGO_TABLE);
-
+const db = client.db(MONGO_TABLE);
+export default db;
 
 export type ConnectionResult = {
     success: boolean,

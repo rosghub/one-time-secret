@@ -15,7 +15,7 @@ function storeSecret(secret, password, ttl) {
         userPass: _password != null,
         expiresAt: expiresAt
     };
-    return db_1.db.collection('secrets').insertOne(doc).then(function (res) {
+    return db_1.default.collection('secrets').insertOne(doc).then(function (res) {
         var insertedId = res.insertedId.toHexString();
         console.log("Inserted secret " + insertedId + " with " + (password ? 'user' : 'default') + " pass.");
         return {
@@ -30,7 +30,7 @@ function storeSecret(secret, password, ttl) {
 exports.storeSecret = storeSecret;
 function getSecret(id) {
     try {
-        var collection = db_1.db.collection('secrets');
+        var collection = db_1.default.collection('secrets');
         var doc = { _id: new mongodb_1.ObjectId(id) };
         return collection.findOne(doc).then(function (doc) {
             if (doc) {
@@ -54,7 +54,7 @@ function getSecret(id) {
 exports.getSecret = getSecret;
 function deleteSecret(id) {
     var doc = { _id: new mongodb_1.ObjectId(id) };
-    return db_1.db.collection('secrets').deleteOne(doc).then(function (res) {
+    return db_1.default.collection('secrets').deleteOne(doc).then(function (res) {
         console.log('Secret deleted');
     });
 }

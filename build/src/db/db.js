@@ -36,13 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDB = exports.db = void 0;
+exports.connectDB = void 0;
 var mongodb_1 = require("mongodb");
 var constants_1 = require("../constants");
 var client = new mongodb_1.MongoClient(constants_1.MONGO_URL, {
     serverSelectionTimeoutMS: constants_1.DB_SERVER_TIMEOUT_MS
 });
-exports.db = client.db(constants_1.MONGO_TABLE);
+var db = client.db(constants_1.MONGO_TABLE);
+exports.default = db;
 function connectDB() {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
@@ -85,7 +86,7 @@ function checkIndexes() {
                     exists = indexes.find(function (e) { return e.name == constants_1.MONGO_INDEX_TTL; });
                     if (!!exists) return [3 /*break*/, 3];
                     console.log('Index TTL missing, creating it now');
-                    return [4 /*yield*/, exports.db.collection('secrets').createIndex({ expiresAt: 1 }, {
+                    return [4 /*yield*/, db.collection('secrets').createIndex({ expiresAt: 1 }, {
                             expireAfterSeconds: 0,
                             name: constants_1.MONGO_INDEX_TTL
                         })];
