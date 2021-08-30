@@ -1,8 +1,11 @@
 "use strict";
-var app = require('../src/app');
-module.exports.mochaHooks = {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.mochaHooks = void 0;
+var app_1 = require("../src/app");
+exports.mochaHooks = {
     beforeAll: function (done) {
-        app.on('started', function () { done(); });
+        console.log('RUNNING HOOKS');
+        app_1.default.on('started', function () { done(); });
     }
 };
 //# sourceMappingURL=hooks.js.map

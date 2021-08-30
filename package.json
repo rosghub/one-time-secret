@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/mocha": "^9.0.0",
     "@types/mongodb": "^4.0.7",
     "@types/node": "^16.7.5",
     "chai": "^4.3.4",

@@ -41,4 +41,4 @@ connectDB().then(({ success }: ConnectionResult) => {
         console.log('DB connection failed, aborted.');
 });
 
-module.exports = app;
+export default app;

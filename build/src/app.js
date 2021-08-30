@@ -36,5 +36,5 @@ app.use(function (_req, res) {
     else
         console.log('DB connection failed, aborted.');
 });
-module.exports = app;
+exports.default = app;
 //# sourceMappingURL=app.js.map
