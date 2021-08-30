@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const chai = require('chai');
-const app = require('../build/app');
-const constants = require('./../build/src/constants');
+const app = require('../src/app');
+const constants = require('../src/constants');
 const { parse } = require('node-html-parser');
 
 chai.use(require('chai-http'));

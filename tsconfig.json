@@ -8,6 +8,7 @@
         "strictNullChecks": false
     },
     "include": [
-        "./src/**/*"
+        "./src/**/*",
+        "./tests/**/*"
     ]
 }

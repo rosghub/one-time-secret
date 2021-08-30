@@ -2,12 +2,12 @@
   "name": "one-time-secret",
   "version": "1.0.0",
   "description": "",
-  "main": "build/app.js",
+  "main": "build/src/app.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "test": "npm run compile && mocha tests --require tests/hooks --exit",
-    "start": "NODE_OPTIONS=--enable-source-maps NODE_ENV=production node build/app.js",
-    "dev": "NODE_OPTIONS=--enable-source-maps NODE_ENV=development node build/app.js",
+    "test": "npm run compile && mocha build/tests --require build/tests/hooks --exit",
+    "start": "NODE_OPTIONS=--enable-source-maps NODE_ENV=production node build/src/app.js",
+    "dev": "NODE_OPTIONS=--enable-source-maps NODE_ENV=development node build/src/app.js",
     "watch": "npx tsc -w",
     "compile": "npx tsc"
   },
