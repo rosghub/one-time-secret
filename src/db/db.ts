@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { Document, MongoClient } from "mongodb";
 import { MONGO_URL, MONGO_TABLE, MONGO_INDEX_TTL, DB_SERVER_TIMEOUT_MS } from '../constants';
 
 const client = new MongoClient(MONGO_URL, {
@@ -36,9 +36,14 @@ export async function connectDB(): Promise<ConnectionResult> {
     });
 }
 
+type IndexArray = {
+    name: string
+}[];
+
 async function checkIndexes(): Promise<void> {
     // Create TTL index on secrets collection
-    const indexes = await client.db(MONGO_TABLE).collection('secrets').indexes();
+    const indexes = (await client.db(MONGO_TABLE).collection('secrets').indexes() as IndexArray);
+
     const exists = indexes.find(e => e.name == MONGO_INDEX_TTL)
     if (!exists) {
         console.log('Index TTL missing, creating it now');
