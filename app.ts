@@ -4,7 +4,7 @@ import * as express from 'express';
 import * as constants from './src/constants';
 import { connectDB } from './src/db/db';
 import generate from './src/generate';
-import view = require('./src/view');
+import view from './src/view';
 import { ConnectionResult } from './src/db/db';
 
 const app = express();

@@ -1,25 +1,31 @@
-const { Router } = require('express');
-const { getSecret, deleteSecret } = require('./db/secrets');
-const { decrypt } = require('./crypto-utils');
+import { NextFunction, Request, Response, Router } from 'express';
+import { getSecret, deleteSecret, Secret } from './db/secrets';
+import { decrypt } from './crypto-utils';
 
-module.exports = Router()
+export default Router()
     .get('/:id', findSecret, revealSecret)
     .post('/:id', findSecret, handleUserDecrypt);
 
+interface SecretRequest extends Request {
+    secret: Secret
+}
 
-async function findSecret(req, res, next) {
+async function findSecret(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
-    req.doc = await getSecret(id);
+    const secret = await getSecret(id);
 
-    if (req.doc)
+    if (secret) {
+        (req as SecretRequest).secret = secret;
         next();
+    }
     else
         res.render('secret', { secret: null, decrypted: false });
 }
 
-async function revealSecret(req, res) {
+async function revealSecret(req: Request, res: Response) {
+    const { secret } = (req as SecretRequest);
 
-    if (req.doc.userPass) {
+    if (secret.userPass) {
         res.render('decrypt', {
             link: req.originalUrl,
             wrongPass: false
@@ -31,7 +37,7 @@ async function revealSecret(req, res) {
         if (reveal) {
             try {
                 // Decrypt with default pass
-                const message = decrypt(req.doc.hash);
+                const message = decrypt(secret.hash);
                 await deleteSecret(req.params.id);
                 res.render('secret', { secret: message, decrypted: false });
             }
@@ -45,18 +51,21 @@ async function revealSecret(req, res) {
     }
 }
 
-async function handleUserDecrypt(req, res, next) {
+async function handleUserDecrypt(req: Request, res: Response) {
     const { passphrase } = req.body;
     const { id } = req.params;
+    const { secret } = (req as SecretRequest);
 
     if (!passphrase) {
         res.status(400);
+        res.send('Client error no passphrase provided');
     }
     else {
         try {
-            const secret = decrypt(req.doc.hash, passphrase);
+            // Decrypt with user pass
+            const message = decrypt(secret.hash, passphrase);
             await deleteSecret(id);
-            res.render('secret', { secret, decrypted: true });
+            res.render('secret', { secret: message, decrypted: true });
         }
         catch (e) {
             res.render('decrypt', {

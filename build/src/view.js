@@ -35,25 +35,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Router = require('express').Router;
-var _a = require('./db/secrets'), getSecret = _a.getSecret, deleteSecret = _a.deleteSecret;
-var decrypt = require('./crypto-utils').decrypt;
-module.exports = Router()
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var secrets_1 = require("./db/secrets");
+var crypto_utils_1 = require("./crypto-utils");
+exports.default = (0, express_1.Router)()
     .get('/:id', findSecret, revealSecret)
     .post('/:id', findSecret, handleUserDecrypt);
 function findSecret(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var id, _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
+        var id, secret;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     id = req.params.id;
-                    _a = req;
-                    return [4 /*yield*/, getSecret(id)];
+                    return [4 /*yield*/, (0, secrets_1.getSecret)(id)];
                 case 1:
-                    _a.doc = _b.sent();
-                    if (req.doc)
+                    secret = _a.sent();
+                    if (secret) {
+                        req.secret = secret;
                         next();
+                    }
                     else
                         res.render('secret', { secret: null, decrypted: false });
                     return [2 /*return*/];
@@ -63,11 +65,12 @@ function findSecret(req, res, next) {
 }
 function revealSecret(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var reveal, message, e_1;
+        var secret, reveal, message, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!req.doc.userPass) return [3 /*break*/, 1];
+                    secret = req.secret;
+                    if (!secret.userPass) return [3 /*break*/, 1];
                     res.render('decrypt', {
                         link: req.originalUrl,
                         wrongPass: false
@@ -79,8 +82,8 @@ function revealSecret(req, res) {
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 4, , 5]);
-                    message = decrypt(req.doc.hash);
-                    return [4 /*yield*/, deleteSecret(req.params.id)];
+                    message = (0, crypto_utils_1.decrypt)(secret.hash);
+                    return [4 /*yield*/, (0, secrets_1.deleteSecret)(req.params.id)];
                 case 3:
                     _a.sent();
                     res.render('secret', { secret: message, decrypted: false });
@@ -99,24 +102,26 @@ function revealSecret(req, res) {
         });
     });
 }
-function handleUserDecrypt(req, res, next) {
+function handleUserDecrypt(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var passphrase, id, secret, e_2;
+        var passphrase, id, secret, message, e_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     passphrase = req.body.passphrase;
                     id = req.params.id;
+                    secret = req.secret;
                     if (!!passphrase) return [3 /*break*/, 1];
                     res.status(400);
+                    res.send('Client error no passphrase provided');
                     return [3 /*break*/, 4];
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    secret = decrypt(req.doc.hash, passphrase);
-                    return [4 /*yield*/, deleteSecret(id)];
+                    message = (0, crypto_utils_1.decrypt)(secret.hash, passphrase);
+                    return [4 /*yield*/, (0, secrets_1.deleteSecret)(id)];
                 case 2:
                     _a.sent();
-                    res.render('secret', { secret: secret, decrypted: true });
+                    res.render('secret', { secret: message, decrypted: true });
                     return [3 /*break*/, 4];
                 case 3:
                     e_2 = _a.sent();

@@ -111,7 +111,7 @@ function decrypt(ciphertext, key) {
     const iv = ciphertext.slice(0, IV_BYTE_LEN);
     const encryptedMessage = ciphertext.slice(IV_BYTE_LEN, -1 * AUTH_TAG_BYTE_LEN);
     */
-export function decrypt(hash: Hash, password: string): string {
+export function decrypt(hash: Hash, password?: string): string {
     const { iv, message, authTag, salt } = hash;
     const pass = password || defaultPass;
     const key = getKeyFromPassword(pass, salt);
