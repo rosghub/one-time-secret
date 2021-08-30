@@ -6,10 +6,12 @@ var constants = require("./constants");
 var db_1 = require("./db/db");
 var generate_1 = require("./generate");
 var view_1 = require("./view");
+var favicon = require("serve-favicon");
 var app = express();
 app.set('trust proxy', '127.0.0.1');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
+app.use(favicon('static/favicon.ico'));
 // Redirect http to https in production
 app.use(function (req, res, next) {
     if (!req.secure && process.env.NODE_ENV == 'production')

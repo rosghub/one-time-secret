@@ -5,11 +5,14 @@ import * as constants from './constants';
 import { connectDB, ConnectionResult } from './db/db';
 import generate from './generate';
 import view from './view';
+import * as favicon from 'serve-favicon';
 
 const app = express();
 app.set('trust proxy', '127.0.0.1');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
+
+app.use(favicon('static/favicon.ico'));
 
 // Redirect http to https in production
 app.use((req: Request, res: Response, next) => {
