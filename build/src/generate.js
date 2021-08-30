@@ -35,15 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var storeSecret = require('./db/secrets').storeSecret;
-var MAX_LEN = require('./constants').MAX_LEN;
+Object.defineProperty(exports, "__esModule", { value: true });
+var secrets_1 = require("./db/secrets");
+var constants_1 = require("./constants");
 // @return errors
 function getValidationErrors(secret) {
     if (typeof (secret) !== 'string')
         return 'Invalid data type';
     if (secret.length <= 0)
         return 'Invalid string length';
-    if (secret.length > MAX_LEN)
+    if (secret.length > constants_1.MAX_LEN)
         return 'Secret too long';
     return null;
 }
@@ -71,7 +72,7 @@ function generateSecret(req, res) {
             switch (_c.label) {
                 case 0:
                     _a = req.body, secret = _a.secret, passphrase = _a.passphrase, ttl = _a.ttl;
-                    return [4 /*yield*/, storeSecret(secret, passphrase, ttl)];
+                    return [4 /*yield*/, (0, secrets_1.storeSecret)(secret, passphrase, ttl)];
                 case 1:
                     _b = _c.sent(), insertedId = _b.insertedId, actualTTL = _b.ttl;
                     protocol = req.secure ? 'https' : 'http';
@@ -85,8 +86,5 @@ function generateSecret(req, res) {
         });
     });
 }
-module.exports = [
-    validateSecret,
-    generateSecret
-];
+exports.default = [validateSecret, generateSecret];
 //# sourceMappingURL=generate.js.map

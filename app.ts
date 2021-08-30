@@ -1,9 +1,9 @@
 require('dotenv').config();
+import { Request, Response } from 'express';
+import * as express from 'express';
 import * as constants from './src/constants';
 import { connectDB } from './src/db/db';
-import { Request, Response } from "express";
-import express = require('express');
-import generate = require('./src/generate');
+import generate from './src/generate';
 import view = require('./src/view');
 import { ConnectionResult } from './src/db/db';
 

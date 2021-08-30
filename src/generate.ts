@@ -1,8 +1,9 @@
-const { storeSecret } = require('./db/secrets');
-const { MAX_LEN } = require('./constants');
+import { storeSecret } from './db/secrets';
+import { MAX_LEN } from './constants';
+import { NextFunction, Request, Response } from 'express';
 
 // @return errors
-function getValidationErrors(secret) {
+function getValidationErrors(secret: string): string | null {
     if (typeof(secret) !== 'string')
         return 'Invalid data type';
     if (secret.length <= 0)
@@ -13,7 +14,7 @@ function getValidationErrors(secret) {
     return null;
 }
 
-function validateSecret(req, res, next) {
+function validateSecret(req: Request, res: Response, next: NextFunction) {
     var { secret, ttl } = req.body;
     const validationErrors = getValidationErrors(secret);
     if (validationErrors) {
@@ -32,7 +33,7 @@ function validateSecret(req, res, next) {
     }
 }
 
-async function generateSecret(req, res) {
+async function generateSecret(req: Request, res: Response) {
     const { secret, passphrase, ttl } = req.body;
     const { insertedId, ttl: actualTTL } = await storeSecret(secret, passphrase, ttl);
 
@@ -44,7 +45,4 @@ async function generateSecret(req, res) {
     });
 }
 
-module.exports = [
-    validateSecret,
-    generateSecret
-];
+export default [validateSecret, generateSecret];

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
+var express_1 = require("express");
 var constants = require("./src/constants");
 var db_1 = require("./src/db/db");
-var express = require("express");
-var generate = require("./src/generate");
+var generate_1 = require("./src/generate");
 var view = require("./src/view");
-var app = express();
+var app = (0, express_1.default)();
 app.set('trust proxy', '127.0.0.1');
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true }));
+app.use(express_1.default.urlencoded({ extended: true }));
 // Redirect http to https in production
 app.use(function (req, res, next) {
     if (!req.secure && process.env.NODE_ENV == 'production')
@@ -19,7 +19,7 @@ app.use(function (req, res, next) {
 app.get('/', function (_req, res) {
     res.render('index', { maxLen: constants.MAX_LEN });
 });
-app.post('/generate', generate);
+app.post('/generate', generate_1.default);
 app.use('/view', view);
 app.use(function (_req, res) {
     res.status(404);
