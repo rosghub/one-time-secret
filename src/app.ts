@@ -6,6 +6,7 @@ import { connectDB, ConnectionResult } from './db/db';
 import generate from './generate';
 import view from './view';
 import * as favicon from 'serve-favicon';
+import * as path from 'path';
 
 const app = express();
 app.set('trust proxy', '127.0.0.1');
@@ -13,6 +14,8 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
 app.use(favicon('static/favicon.ico'));
+
+app.use('/css', express.static(path.join(__dirname, '../..', 'static/css')));
 
 // Redirect http to https in production
 app.use((req: Request, res: Response, next) => {
