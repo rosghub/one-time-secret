@@ -15,8 +15,29 @@
     }
 
     body {
-        padding-bottom: 5em;
+        background-color: #F4F1DE;
     }
+
+    .features {
+        background-color: #3D405B;
+        padding: 2em;
+        padding-left: 3em;
+    }
+
+    .faq {
+        background-color: #F2CC8F;
+        padding: 2em;
+        padding-left: 3em;
+    }
+
+    li {
+        margin-top: 8px;
+    }
+
+    .button.is-link {
+        background-color: #E07A5F;
+    }
+
 </style>
 
 <body>
@@ -83,17 +104,26 @@
             </div>
         </div>
         <br />
-        <div class="columns is-centered mx-3 mt-5">
-            <div class="column is-narrow px-5">
-                <ul>
-                    <li>Links generated with this app can only be used once.</li>
-                    <li>Secrets are encrypted at rest by a default password.</li>
-                    <li>Providing your own passphrase will encrypt it with your own passphrase.</li>
-                    <li>Secrets have a default TTL of 7 days.</li>
-                    <li>After being revealed once, a secret <strong>cannot</strong> be recovered.</li>
-                </ul>
+
+        <section class="hero is-small">
+            <div class="hero-body p-0">
+                <div class="columns">
+                    <div class="column is-5 features has-text-light">
+                        <p class="title has-text-light">Features</p>
+                        <ul>
+                            <li>Links generated with this app can only be used once.</li>
+                            <li>Secrets are encrypted at rest by a default password.</li>
+                            <li>Providing your own passphrase will encrypt it with your own passphrase.</li>
+                            <li>Secrets have a default TTL of 7 days.</li>
+                            <li>After being revealed once, a secret <strong>cannot</strong> be recovered.</li>
+                        </ul>
+                    </div>
+                    <div class="column is-7 faq has-text-light">
+                        <p class="title">FAQ</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
 
 </body>
 
