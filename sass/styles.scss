@@ -6,11 +6,13 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
 // Set your brand colors
+
 $purple: #8A4D76;
 $pink: #FA7C91;
 $brown: #757763;
 $beige-light: #D0D1CD;
 $beige-lighter: #EFF0EB;
+
 
 // Update Bulma's global variables
 $light: $beige-light;
@@ -42,3 +44,4 @@ $input-shadow: none;
 @import "../node_modules/bulma/sass/helpers/spacing.sass";
 @import "../node_modules/bulma/sass/helpers/typography.sass";
 @import "../node_modules/bulma/sass/helpers/color.sass";
+@import "../node_modules/bulma/sass/elements/notification.sass";
