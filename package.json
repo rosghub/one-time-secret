@@ -8,6 +8,7 @@
     "test": "npm run compile && mocha build/tests --require build/tests/hooks --exit",
     "start": "NODE_OPTIONS=--enable-source-maps NODE_ENV=production node build/src/app.js",
     "dev": "NODE_OPTIONS=--enable-source-maps NODE_ENV=development node build/src/app.js",
+    "design": "NODE_OPTIONS=--enable-source-maps NODE_ENV=development node build/src/designer.js",
     "watch": "npx tsc -w",
     "compile": "npx tsc",
     "css-build": "node-sass --omit-source-map-url sass/styles.scss --output static/css",

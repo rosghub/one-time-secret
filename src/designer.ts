@@ -1,16 +1,21 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 import * as constants from './constants';
+import * as favicon from 'serve-favicon';
+import * as path from 'path';
+
 const app = express();
 
 const { PORT } = constants;
 
+app.use(favicon('static/favicon.ico'));
+app.use('/css', express.static(path.join(__dirname, '../..', 'static/css')));
 app.set('view engine', 'ejs')
     .get('/', (req: Request, res: Response) => {
         res.render('index', { maxLen: constants.MAX_LEN });
     })
     .get('/generate', (req: Request, res: Response) => {
-        res.render('generate', { link: 'link' });
+        res.render('generate', { link: 'http://localhost:3000/view/12394732984723942349823', ttl: 4 });
     })
     .get('/spoiler', (req: Request, res: Response) => {
         res.render('spoiler');
