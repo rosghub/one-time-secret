@@ -19,23 +19,16 @@
             </div>
         </section>
 
-        <% if (wrongPass) {%>
-            <div class="block mx-5">
-                <p class="has-text-centered has-text-danger">
-                    Cannot decrypt this secret with the provided passphrase.
-                </p>
-            </div>
-            <% } %>
-
-
                 <div class="columns is-centered mx-4">
                     <div class="column is-narrow">
+
                         <form action="<%= link %>" method="POST">
+
                             <div class="field is-horizontal">
                                 <div class="field-label is-normal">
                                     <label class="label">Passphrase</label>
                                 </div>
-                                <div class="field-body">
+                                <div>
                                     <div class="control has-icons-left">
                                         <input class="input <%= (wrongPass) ? 'is-danger' : '' %>" type="password"
                                             name="passphrase" required>
@@ -43,8 +36,16 @@
                                             <i class="fas fa-lock"></i>
                                         </span>
                                     </div>
+
+                                    <% if (wrongPass) { %>
+                                        <p class="help has-text-danger">
+                                            Cannot decrypt this secret with the provided passphrase.
+                                        </p>
+                                        <% } %>
                                 </div>
+
                             </div>
+
                             <div class="field" style="float: right;">
                                 <div class="control">
                                     <button class="button is-link">Decrypt</button>

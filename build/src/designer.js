@@ -19,10 +19,10 @@ app.set('view engine', 'ejs')
     res.render('spoiler');
 })
     .get('/view', function (req, res) {
-    res.render('secret', { secret: 'true', decrypted: false });
+    res.render('secret', { secret: 'true', decrypted: true });
 })
     .get('/decrypt', function (req, res) {
-    res.render('decrypt', { link: '/view/1234', wrongPass: true });
+    res.render('decrypt', { link: '/view/1234', wrongPass: false });
 })
     .use(function (req, res) {
     res.render('error');
