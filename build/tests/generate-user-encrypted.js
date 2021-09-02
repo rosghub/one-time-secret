@@ -90,7 +90,7 @@ describe('Generates and consumes default-encrypted secret', function () {
             (0, chai_1.expect)(root.querySelector('.subtitle').text.trim())
                 .to.be.a('string').and.match(/^Your secret has been revealed/);
             // Check successful decryption message
-            var m = root.querySelector('.has-text-success');
+            var m = root.querySelector('.help');
             (0, chai_1.expect)(m).to.not.be.null;
             (0, chai_1.expect)(m.text.trim())
                 .to.be.a('string').and.match(/^Successfully decrypted with user passphrase\./);

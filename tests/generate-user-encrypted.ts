@@ -112,7 +112,7 @@ describe('Generates and consumes default-encrypted secret', () => {
                     .to.be.a('string').and.match(/^Your secret has been revealed/);
 
                 // Check successful decryption message
-                const m = root.querySelector('.has-text-success');
+                const m = root.querySelector('.help');
                 expect(m).to.not.be.null;
                 expect(m.text.trim())
                     .to.be.a('string').and.match(/^Successfully decrypted with user passphrase\./);
