@@ -3,8 +3,8 @@
 @charset "utf-8";
 
 // Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-
+//@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
 // Set your brand colors
 /*
 $purple: #8A4D76;
@@ -28,6 +28,7 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 */
+$family-sans-serif: "IBM Plex Sans Arabic", sans-serif;
 $eggshell: #f4f1deff;
 $terra-cotta: #e07a5fff;
 $independence: #3d405bff;
