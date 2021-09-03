@@ -4,7 +4,7 @@
         align-items: stretch;
     }
 
-    .navbar-start {
+    .navbar-brand {
         display: flex;
         justify-content: flex-start;
         margin-right: auto;
