@@ -1,7 +1,7 @@
 //@charset "utf-8";
 //@import "../node_modules/bulma/bulma.sass";
 @charset "utf-8";
-
+@import "../node_modules/bulma/sass/utilities/initial-variables.sass";
 // Import a Google Font
 //@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
@@ -50,8 +50,10 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
-//$container-offset: 
-
+$navbar-padding-vertical: 0;
+$navbar-padding-horizontal: 10%;
+//$navbar-breakpoint: $tablet;
+$navbar-breakpoint: 0;
 
 
 // Import only what you need from Bulma
