@@ -1281,16 +1281,16 @@ table th {
       max-width: 960px; } }
   @media screen and (max-width: 1215px) {
     .container.is-widescreen:not(.is-max-desktop) {
-      max-width: 1152px; } }
+      max-width: -14px; } }
   @media screen and (max-width: 1407px) {
     .container.is-fullhd:not(.is-max-desktop):not(.is-max-widescreen) {
-      max-width: 1344px; } }
+      max-width: -14px; } }
   @media screen and (min-width: 1216px) {
     .container:not(.is-max-desktop) {
-      max-width: 1152px; } }
+      max-width: -14px; } }
   @media screen and (min-width: 1408px) {
     .container:not(.is-max-desktop):not(.is-max-widescreen) {
-      max-width: 1344px; } }
+      max-width: -14px; } }
 
 .title,
 .subtitle {

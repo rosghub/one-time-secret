@@ -52,9 +52,10 @@ $input-shadow: none;
 
 $navbar-padding-vertical: 0;
 $navbar-padding-horizontal: 10%;
-//$navbar-breakpoint: $tablet;
 $navbar-breakpoint: 0;
 
+//$gap: 120px;
+$container-max-width: 50px;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass";
