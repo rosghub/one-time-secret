@@ -13,7 +13,11 @@ app.set('view engine', 'ejs')
     res.render('index', { maxLen: constants.MAX_LEN });
 })
     .get('/generate', function (req, res) {
-    res.render('generate', { link: 'http://localhost:3000/view/12394732984723942349823', ttl: 4 });
+    res.render('generate', {
+        link: 'http://localhost:3000/view/12394732984723942349823',
+        ttl: 4,
+        expirationDate: new Date().getTime()
+    });
 })
     .get('/spoiler', function (req, res) {
     res.render('spoiler');

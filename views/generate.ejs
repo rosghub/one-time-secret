@@ -3,11 +3,25 @@
 
 <head>
     <%- include('partials/head'); %>
+        <script>
+            window.onload = function (e) {
+                const opts = {
+                    "day": "numeric",
+                    "month": "short",
+                    "year": "numeric",
+                    "hour": "numeric",
+                    "minute": "numeric"
+                };
+                const date = new Date(<%= expirationDate %>);
+                const locale = window.navigator.languages[0];
+                const expDate = document.getElementById("expDate");
+                expDate.textContent = date.toLocaleDateString(locale, opts);
+            }
+        </script>
 </head>
 <style>
     <%- include('css/notification.css');
-    %>
-    <%- include('css/topbar.css');
+    %><%- include('css/topbar.css');
     %>
 </style>
 
@@ -20,14 +34,54 @@
                 <p class="subtitle is-size-6-mobile">
                     It can only be viewed once.<br />
                     After that it will be gone forever.<br />
-                    It expires in <strong id="ttl"><%= `${ttl} ${ttl > 1 ? 'days.' : 'day.'}` %></strong>
+                    It expires in <strong id="ttl">
+                        <%= `${ttl} ${ttl> 1 ? 'days.' : 'day.'}` %>
+                    </strong>
                 </p>
             </div>
         </section>
 
-        <%- include('partials/notification', { content: link, isLink: true }); %>
+        <div class="columns is-centered">
+            <div class="column is-narrow mx-4">
+                <div class="notification is-info-light pb-5" onclick="copyLink()">
+                    <span class="icon" id="copy_icon">
+                        <i class="fas fa-copy" id="copy_btn"></i>
+                        <i class="fas fa-check has-text-success-dark" id="success_btn" style="display: none"></i>
+                    </span>
+                    <p id="secret">
+                        <%= link %>
+                    </p>
+                    <div class="ml-5">
+                        <p class="help">Expiration Date:</p>
+                        <p id="expDate">2/2/2</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function copyLink(e) {
+                // copy link
+                var range = document.createRange();
+                range.selectNode(document.getElementById("secret"));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand("copy");
+                window.getSelection().removeAllRanges();
 
-            <%- include('partials/homebutton') %>
+                // flash success icon
+                var copyBtn = document.getElementById("copy_btn");
+                var successBtn = document.getElementById("success_btn");
+                copyBtn.style.display = 'none';
+                successBtn.style.display = 'block';
+
+                window.setTimeout(() => {
+                    copyBtn.style.display = 'block';
+                    successBtn.style.display = 'none';
+                }, 1200);
+            }
+        </script>
+
+        <%- include('partials/homebutton') %>
 </body>
 
 </html>

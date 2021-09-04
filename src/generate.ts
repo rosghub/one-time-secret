@@ -48,7 +48,7 @@ async function generateSecret(req: Request, res: Response) {
     res.render('generate', {
         link: url,
         ttl: actualTTL,
-        expirationDate: expiresAt,
+        expirationDate: expiresAt.getTime(),
         userPass
     });
 }
