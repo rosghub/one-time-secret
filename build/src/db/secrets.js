@@ -20,7 +20,8 @@ function storeSecret(secret, password, ttl) {
         console.log("Inserted secret " + insertedId + " with " + (password ? 'user' : 'default') + " pass.");
         return {
             insertedId: insertedId,
-            ttl: _ttl + ''
+            ttl: _ttl + '',
+            expiresAt: expiresAt
         };
     }).catch(function (err) {
         console.error(err);

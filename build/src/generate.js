@@ -67,19 +67,20 @@ function validateSecret(req, res, next) {
 }
 function generateSecret(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, secret, passphrase, ttl, _b, insertedId, actualTTL, protocol, url;
+        var _a, secret, passphrase, ttl, _b, insertedId, actualTTL, expiresAt, protocol, url;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     _a = req.body, secret = _a.secret, passphrase = _a.passphrase, ttl = _a.ttl;
                     return [4 /*yield*/, (0, secrets_1.storeSecret)(secret, passphrase, ttl)];
                 case 1:
-                    _b = _c.sent(), insertedId = _b.insertedId, actualTTL = _b.ttl;
+                    _b = _c.sent(), insertedId = _b.insertedId, actualTTL = _b.ttl, expiresAt = _b.expiresAt;
                     protocol = req.secure ? 'https' : 'http';
                     url = protocol + '://' + req.get('host') + '/view/' + insertedId;
                     res.render('generate', {
                         link: url,
-                        ttl: actualTTL
+                        ttl: actualTTL,
+                        expirationDate: expiresAt
                     });
                     return [2 /*return*/];
             }

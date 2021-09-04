@@ -12,7 +12,8 @@ export type Secret = {
 
 export type StoreSecretResult = {
     insertedId: string,
-    ttl?: string
+    ttl?: string,
+    expiresAt?: Date
 };
 
 export function storeSecret(secret: string, password: string, ttl: string): Promise<StoreSecretResult> {
@@ -33,7 +34,8 @@ export function storeSecret(secret: string, password: string, ttl: string): Prom
 
         return {
             insertedId,
-            ttl: _ttl + ''
+            ttl: _ttl + '',
+            expiresAt
         };
 
     }).catch(err => {
