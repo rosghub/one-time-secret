@@ -20,9 +20,30 @@
         </script>
 </head>
 <style>
-    <%- include('css/notification.css');
-    %><%- include('css/topbar.css');
-    %>
+    <%- include('css/topbar.css');
+
+    %>#copy_icon {
+        position: absolute;
+        right: .5rem;
+        padding-top: 20px;
+        transform: translateY(35%);
+    }
+
+    #secret {
+        overflow-x: auto;
+        padding: 20px 0 20px 20px;
+        margin-right: 45px;
+        background-clip: content-box;
+    }
+
+    .notification {
+        padding: 0 24px 0 0;
+        border: 3px solid #3d405bff;
+    }
+
+    .not-top {
+        border-bottom: 1px solid #3d405bff;
+    }
 </style>
 
 <body>
@@ -43,15 +64,17 @@
 
         <div class="columns is-centered">
             <div class="column is-narrow mx-4">
-                <div class="notification is-info-light pb-5" onclick="copyLink()">
-                    <span class="icon" id="copy_icon">
-                        <i class="fas fa-copy" id="copy_btn"></i>
-                        <i class="fas fa-check has-text-success-dark" id="success_btn" style="display: none"></i>
-                    </span>
-                    <p id="secret">
-                        <%= link %>
-                    </p>
-                    <div class="ml-5">
+                <div class="notification is-info-light px-0" onclick="copyLink()">
+                    <div class="not-top">
+                        <span class="icon" id="copy_icon">
+                            <i class="fas fa-copy" id="copy_btn"></i>
+                            <i class="fas fa-check has-text-success-dark" id="success_btn" style="display: none"></i>
+                        </span>
+                        <p id="secret">
+                            <%= link %>
+                        </p>
+                    </div>
+                    <div class="ml-5 py-5">
                         <p class="help">Expiration Date:</p>
                         <p id="expDate">2/2/2</p>
                     </div>

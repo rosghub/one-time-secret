@@ -1,12 +1,8 @@
 #copy_icon {
     position: absolute;
     right: .5rem;
-    /*
     top: 50%;
     transform: translateY(-50%);
-    */
-    padding-top: 20px;
-    transform: translateY(35%);
 }
 
 #secret {
