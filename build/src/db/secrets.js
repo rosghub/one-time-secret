@@ -21,7 +21,8 @@ function storeSecret(secret, password, ttl) {
         return {
             insertedId: insertedId,
             ttl: _ttl + '',
-            expiresAt: expiresAt
+            expiresAt: expiresAt,
+            userPass: doc.userPass
         };
     }).catch(function (err) {
         console.error(err);

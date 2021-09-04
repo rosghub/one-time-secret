@@ -35,7 +35,12 @@ function validateSecret(req: Request, res: Response, next: NextFunction) {
 
 async function generateSecret(req: Request, res: Response) {
     const { secret, passphrase, ttl } = req.body;
-    const { insertedId, ttl: actualTTL, expiresAt } = await storeSecret(secret, passphrase, ttl);
+    const { 
+        insertedId, 
+        ttl: actualTTL, 
+        expiresAt,
+        userPass
+    } = await storeSecret(secret, passphrase, ttl);
 
     const protocol = req.secure ? 'https' : 'http';
     const url = protocol + '://' + req.get('host') + '/view/' + insertedId;
@@ -43,7 +48,8 @@ async function generateSecret(req: Request, res: Response) {
     res.render('generate', {
         link: url,
         ttl: actualTTL,
-        expirationDate: expiresAt
+        expirationDate: expiresAt,
+        userPass
     });
 }
 
