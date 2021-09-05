@@ -40,11 +40,6 @@
         padding: 0 24px 0 0;
         border: 3px solid #3d405bff;
     }
-/*
-    .not-top {
-        border-bottom: 1px solid #3d405bff;
-    }
-    */
 </style>
 
 <body>
@@ -66,19 +61,26 @@
         <div class="columns is-centered">
             <div class="column is-narrow mx-4">
                 <div class="notification is-info-light px-0" onclick="copyLink()">
-                    <div class="not-top">
-                        <span class="icon" id="copy_icon">
-                            <i class="fas fa-copy" id="copy_btn"></i>
-                            <i class="fas fa-check has-text-success-dark" id="success_btn" style="display: none"></i>
-                        </span>
-                        <p id="secret">
-                            <%= link %>
-                        </p>
-                    </div>
+
+                    <span class="icon" id="copy_icon">
+                        <i class="fas fa-copy" id="copy_btn"></i>
+                        <i class="fas fa-check has-text-success-dark" id="success_btn" style="display: none"></i>
+                    </span>
+                    <p id="secret">
+                        <%= link %>
+                    </p>
+
                     <hr class="my-0 has-background-info" />
-                    <div class="ml-5 py-5">
-                        <p class="help">Expiration Date:</p>
-                        <p id="expDate">2/2/2</p>
+                    <!-- ml-5 py-5 -->
+                    <div class="columns m-0 px-2 py-3">
+                        <div class="column py-0">
+                            <p class="help">Expiration Date:</p>
+                            <p id="expDate">2/2/2</p>
+                        </div>
+                        <div class="column py-0">
+                            <p class="help">Encryption:</p>
+                            <p id="expDate">Default</p>
+                        </div>
                     </div>
                 </div>
             </div>
