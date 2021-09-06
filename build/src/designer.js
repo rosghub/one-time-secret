@@ -16,7 +16,8 @@ app.set('view engine', 'ejs')
     res.render('generate', {
         link: 'http://localhost:3000/view/12394732984723942349823',
         ttl: 4,
-        expirationDate: new Date().getTime()
+        expirationDate: new Date().getTime(),
+        secret: 'this is a secret oaiwjef oiwa jfowa jfowai foewathis is a secret oaiwjef oiwa jfowa jfowai foewathis is a secret oaiwjef oiwa jfowa jfowai foewa'
     });
 })
     .get('/spoiler', function (req, res) {

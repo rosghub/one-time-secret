@@ -4,6 +4,9 @@
 <head>
     <%- include('partials/head'); %>
         <script>
+            const secret = '<%= secret %>';
+            //const hiddenSecret = '•'.repeat(secret.length);
+            const hiddenSecret = '<%= "•".repeat(secret.length) %>';
             window.onload = function (e) {
                 const opts = {
                     "day": "numeric",
@@ -16,6 +19,8 @@
                 const locale = window.navigator.languages[0];
                 const expDate = document.getElementById("expDate");
                 expDate.textContent = date.toLocaleDateString(locale, opts);
+
+                document.getElementById('secret_content').textContent = hiddenSecret;
             }
         </script>
 </head>
@@ -46,6 +51,13 @@
         right: .5rem;
         transform: translateY(35%);
     }
+
+    #secret_content {
+        max-width: 80%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 </style>
 
 <body>
@@ -66,22 +78,24 @@
 
         <div class="columns is-centered">
             <div class="column is-narrow mx-4">
-                <div class="notification is-info-light px-0" onclick="copyLink()">
+                <div class="notification is-info-light px-0">
 
-                    <span class="icon" id="copy_icon">
-                        <i class="fas fa-copy" id="copy_btn"></i>
-                        <i class="fas fa-check has-text-success-dark" id="success_btn" style="display: none"></i>
-                    </span>
-                    <p id="secret">
-                        <%= link %>
-                    </p>
+                    <div onclick="copyLink()">
+                        <span class="icon" id="copy_icon">
+                            <i class="fas fa-copy" id="copy_btn"></i>
+                            <i class="fas fa-check has-text-success-dark" id="success_btn" style="display: none"></i>
+                        </span>
+                        <p id="secret">
+                            <%= link %>
+                        </p>
+                    </div>
 
                     <hr class="my-0 has-background-info" />
 
                     <div class="columns is-mobile is-multiline m-0 px-2 py-3" onclick="toggleSecret()">
                         <div class="column is-12 py-0">
                             <p class="help">Secret:</p>
-                            <p>• • • • • • • • • • • • • • • • • • • • •</p>
+                            <p id="secret_content"></p>
                         </div>
 
                         <span class="icon" id="hide_secret">
@@ -124,8 +138,19 @@
             }
 
             function toggleSecret(e) {
-                console.log('toggle secret');
-                e.event.stopPropagation();
+                const showBtn = document.getElementById('show_btn');
+                const hideBtn = document.getElementById('hide_btn');
+                const content = document.getElementById('secret_content');
+                if (hideBtn.style.display == 'none') {
+                    content.textContent = secret;
+                    showBtn.style.display = 'none';
+                    hideBtn.style.display = 'block';
+                }
+                else {
+                    content.textContent = hiddenSecret;
+                    showBtn.style.display = 'block';
+                    hideBtn.style.display = 'none';
+                }
             }
         </script>
 
