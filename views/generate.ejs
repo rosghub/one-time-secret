@@ -53,10 +53,10 @@
     }
 
     #secret_content {
-        max-width: 80%;
+        max-width: <%= link.length %>ex;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
+        white-space: normal;
     }
 </style>
 
@@ -92,26 +92,33 @@
 
                     <hr class="my-0 has-background-info" />
 
-                    <div class="columns is-mobile is-multiline m-0 px-2 py-3" onclick="toggleSecret()">
-                        <div class="column is-12 py-0">
-                            <p class="help">Secret:</p>
-                            <p id="secret_content"></p>
+                    <div class="px-2 py-3">
+                        <div class="columns is-mobile m-0">
+                            <div class="column py-0">
+                                <p class="help">Secret:</p>
+                                <p id="secret_content"></p>
+                            </div>
+
+                            <span class="icon" id="hide_secret">
+                                <i class="fas fa-eye" id="show_btn"></i>
+                                <i class="fas fa-eye-slash" id="hide_btn" style="display: none"></i>
+                            </span>
                         </div>
 
-                        <span class="icon" id="hide_secret">
-                            <i class="fas fa-eye" id="show_btn"></i>
-                            <i class="fas fa-eye-slash" id="hide_btn" style="display: none"></i>
-                        </span>
 
-                        <div class="column is-narrow-mobile py-0">
-                            <p class="help">Expiration Date:</p>
-                            <p id="expDate"></p>
+                        <div class="columns is-mobile m-0" onclick="toggleSecret()">
+                            <div class="column is-narrow-mobile py-0">
+                                <p class="help">Expiration Date:</p>
+                                <p id="expDate"></p>
+                            </div>
+                            <div class="column is-narrow-mobile py-0">
+                                <p class="help">Encryption:</p>
+                                <p id="expDate">Default</p>
+                            </div>
                         </div>
-                        <div class="column is-narrow-mobile py-0">
-                            <p class="help">Encryption:</p>
-                            <p id="expDate">Default</p>
-                        </div>
+
                     </div>
+
                 </div>
             </div>
         </div>

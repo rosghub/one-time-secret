@@ -18,6 +18,7 @@ app.set('view engine', 'ejs')
         ttl: 4,
         expirationDate: new Date().getTime(),
         secret: 'this is a secret oaiwjef oiwa jfowa jfowai foewathis is a secret oaiwjef oiwa jfowa jfowai foewathis is a secret oaiwjef oiwa jfowa jfowai foewa'
+        //secret: 'test'
     });
 })
     .get('/spoiler', function (req, res) {
