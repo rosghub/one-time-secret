@@ -81,7 +81,8 @@ function generateSecret(req, res) {
                         link: url,
                         ttl: actualTTL,
                         expirationDate: expiresAt.getTime(),
-                        userPass: userPass
+                        userPass: userPass,
+                        secret: secret
                     });
                     return [2 /*return*/];
             }
