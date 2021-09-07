@@ -5,7 +5,6 @@
     <%- include('partials/head'); %>
         <script>
             const secret = '<%= secret %>';
-            //const hiddenSecret = '•'.repeat(secret.length);
             const hiddenSecret = '<%= "•".repeat(secret.length) %>';
             window.onload = function (e) {
                 const opts = {
