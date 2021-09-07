@@ -1,39 +1,12 @@
-//@charset "utf-8";
-//@import "../node_modules/bulma/bulma.sass";
 @charset "utf-8";
 //@import "../node_modules/bulma/sass/utilities/initial-variables.sass";
-// Import a Google Font
-//@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic&display=swap');
-// Set your brand colors
-/*
-$purple: #8A4D76;
-$pink: #FA7C91;
-$brown: #757763;
-$beige-light: #D0D1CD;
-$beige-lighter: #EFF0EB;
 
-
-// Update Bulma's global variables
-$light: $beige-light;
-$family-sans-serif: "Nunito", sans-serif;
-$grey-dark: $brown;
-$grey-light: $beige-light;
-$primary: $purple;
-$link: $pink;
-
-// Update some of Bulma's component variables
-$body-background-color: $beige-lighter;
-$control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
-*/
 $family-sans-serif: "IBM Plex Sans Arabic", sans-serif;
 $eggshell: #f4f1deff;
 $terra-cotta: #e07a5fff;
 $independence: #3d405bff;
 $independence-light: #5A5E87;
-//$green-sheen: #B3D0C2;
 $green-sheen: #81B29A;
 $deep-champagne: #f2cc8fff;
 
@@ -62,10 +35,10 @@ $navbar-padding-horizontal: 10%;
 @import "../node_modules/bulma/sass/elements/title.sass";
 @import "../node_modules/bulma/sass/form/_all.sass";
 @import "../node_modules/bulma/sass/components/navbar.sass";
-@import "../node_modules/bulma/sass/layout/hero.sass";
+//@import "../node_modules/bulma/sass/layout/hero.sass";
 @import "../node_modules/bulma/sass/layout/section.sass";
 @import "../node_modules/bulma/sass/grid/columns.sass";
-@import "../node_modules/bulma/sass/components/level.sass";
+//@import "../node_modules/bulma/sass/components/level.sass";
 @import "../node_modules/bulma/sass/elements/icon.sass";
 @import "../node_modules/bulma/sass/helpers/spacing.sass";
 @import "../node_modules/bulma/sass/helpers/typography.sass";
