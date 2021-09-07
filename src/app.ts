@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import * as express from 'express';
 import * as constants from './constants';
 import { connectDB, ConnectionResult } from './db/db';
@@ -14,16 +14,18 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
 app.use(favicon('static/favicon.ico'));
-
 app.use('/css', express.static(path.join(__dirname, '../..', 'static/css')));
 
-// Redirect http to https in production
-app.use((req: Request, res: Response, next) => {
-    if (!req.secure && process.env.NODE_ENV == 'production')
-        return res.redirect('https://' + req.get('host') + req.url);
 
-    next();
-});
+// Redirect http to https in production
+if (process.env.NODE_ENV == 'production') {
+    app.use((req: Request, res: Response, next: NextFunction) => {
+        if (!req.secure)
+            return res.redirect('https://' + req.get('host') + req.url);
+
+        next();
+    });
+}
 
 app.get('/', (_req, res: Response) => {
     res.render('index', { maxLen: constants.MAX_LEN })
