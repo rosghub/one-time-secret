@@ -7,8 +7,6 @@ Secrets are encrypted at rest with a default password.
     - How it works
     - FAQ
 - Add more info to /generate
-    - Expiration Date
-    - User encrypted: yes/no
     - Delete button
 
 - Add more info to /view/:id
