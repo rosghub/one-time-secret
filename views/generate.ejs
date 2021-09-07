@@ -22,6 +22,43 @@
 
                 document.getElementById('secret_content').textContent = hiddenSecret;
             }
+
+            function copyLink(e) {
+                // copy link
+                var range = document.createRange();
+                range.selectNode(document.getElementById("secret"));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand("copy");
+                window.getSelection().removeAllRanges();
+
+                // flash success icon
+                var copyBtn = document.getElementById("copy_btn");
+                var successBtn = document.getElementById("success_btn");
+                copyBtn.style.display = 'none';
+                successBtn.style.display = 'block';
+
+                window.setTimeout(() => {
+                    copyBtn.style.display = 'block';
+                    successBtn.style.display = 'none';
+                }, 1200);
+            }
+
+            function toggleSecret(e) {
+                const showBtn = document.getElementById('show_btn');
+                const hideBtn = document.getElementById('hide_btn');
+                const content = document.getElementById('secret_content');
+                if (hideBtn.style.display == 'none') {
+                    content.textContent = secret;
+                    showBtn.style.display = 'none';
+                    hideBtn.style.display = 'block';
+                }
+                else {
+                    content.textContent = hiddenSecret;
+                    showBtn.style.display = 'block';
+                    hideBtn.style.display = 'none';
+                }
+            }
         </script>
 </head>
 <style>
@@ -53,7 +90,7 @@
     }
 
     #secret_content {
-        max-width: <%= link.length %>ex;
+        max-width: <%=link.length %>ex;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: normal;
@@ -112,7 +149,9 @@
                             </div>
                             <div class="column is-narrow-mobile py-0">
                                 <p class="help">Encryption:</p>
-                                <p id="expDate"><%- userPass ? 'User Passphrase' : 'Default' %></p>
+                                <p id="expDate">
+                                    <%- userPass ? 'User Passphrase' : 'Default' %>
+                                </p>
                             </div>
                         </div>
 
@@ -122,42 +161,7 @@
             </div>
         </div>
         <script>
-            function copyLink(e) {
-                // copy link
-                var range = document.createRange();
-                range.selectNode(document.getElementById("secret"));
-                window.getSelection().removeAllRanges();
-                window.getSelection().addRange(range);
-                document.execCommand("copy");
-                window.getSelection().removeAllRanges();
 
-                // flash success icon
-                var copyBtn = document.getElementById("copy_btn");
-                var successBtn = document.getElementById("success_btn");
-                copyBtn.style.display = 'none';
-                successBtn.style.display = 'block';
-
-                window.setTimeout(() => {
-                    copyBtn.style.display = 'block';
-                    successBtn.style.display = 'none';
-                }, 1200);
-            }
-
-            function toggleSecret(e) {
-                const showBtn = document.getElementById('show_btn');
-                const hideBtn = document.getElementById('hide_btn');
-                const content = document.getElementById('secret_content');
-                if (hideBtn.style.display == 'none') {
-                    content.textContent = secret;
-                    showBtn.style.display = 'none';
-                    hideBtn.style.display = 'block';
-                }
-                else {
-                    content.textContent = hiddenSecret;
-                    showBtn.style.display = 'block';
-                    hideBtn.style.display = 'none';
-                }
-            }
         </script>
 
         <%- include('partials/homebutton') %>
