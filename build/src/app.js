@@ -13,13 +13,15 @@ app.set('trust proxy', '127.0.0.1');
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(favicon('static/favicon.ico'));
-app.use('/css', express.static(path.join(__dirname, '../..', 'static/css')));
+app.use('/css', express.static(path.join(__dirname, '../../static/css')));
 // Redirect http to https in production
-app.use(function (req, res, next) {
-    if (!req.secure && process.env.NODE_ENV == 'production')
-        return res.redirect('https://' + req.get('host') + req.url);
-    next();
-});
+if (process.env.NODE_ENV == 'production') {
+    app.use(function (req, res, next) {
+        if (!req.secure)
+            return res.redirect('https://' + req.get('host') + req.url);
+        next();
+    });
+}
 app.get('/', function (_req, res) {
     res.render('index', { maxLen: constants.MAX_LEN });
 });
