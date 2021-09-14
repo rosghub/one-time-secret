@@ -19,7 +19,7 @@ jobs:
         debug: true
         directory: ./
         badge: ./output/badge.svg
-        patterns: '*.ts'  # Patterns in the format of a '.gitignore' file, separated by pipes.
+        patterns: 'sass/*|src/**/*|tests/**/*|views/**/*'  # Patterns in the format of a '.gitignore' file, separated by pipes.
         ignore: 'node_modules|README.md'
 
     - name: Print the output
