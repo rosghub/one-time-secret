@@ -1,4 +1,4 @@
-name: Count lines in project
+name: Count Lines
 
 on:
   push:
